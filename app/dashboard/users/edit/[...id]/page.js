@@ -39,7 +39,7 @@ const Page = ({params}) => {
   
     fetchOldData()
 
-  },[])
+  },[param])
   const handleChange = (e) => {
     if (e.target.name == "name") {
       setName(e.target.value);

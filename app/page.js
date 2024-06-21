@@ -41,8 +41,10 @@ export default function Home() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Image
           className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
           alt="Your Company"
+          width={100}
+          height={100}
+
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
           Sign in to your account
@@ -114,7 +116,7 @@ export default function Home() {
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          doesn't have an account?
+          doesn&lsquo;t have an account?
           <Link
             href="/signup"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
