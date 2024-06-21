@@ -30,8 +30,8 @@ const page = () => {
       setRole(e.target.value);
     } else if (e.target.name == "permission") {
       
-      setPermission(e.target.value);
-      console.log(permission)
+      setPermission(e.target.value); 
+      console.log(permission )
     }else if (e.target.name == "password") {
       setPassword(e.target.value);
     }
