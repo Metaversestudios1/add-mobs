@@ -32,7 +32,7 @@ const page = () => {
       
       setPermission(e.target.value); 
       console.log(permission )
-    }else if (e.target.name == "password") {
+    }else if (e.target.name == "password") { 
       setPassword(e.target.value);
     }
   };
