@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  background-color: rgb(17 24 39);
+  justify-content: center;
+}
+.container h3 {
+  padding: 20px;
+  }
+  .container li {
+    padding: 20px;
+    list-style: none;
+}

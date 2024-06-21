@@ -1,0 +1,30 @@
+
+.container {
+  display: flex;
+}
+.sidebar {
+  flex: 1 ;
+}
+.content {
+  flex: 5;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+}
+.contentContainer {
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: rgb(17 24 39);
+  }
+  
+  
+  .addContainer {
+    margin-top: 20px;
+    padding: 10px 20px;
+  background-color: rgb(17 24 39);
+}
+.imageContainer {
+  flex: 1;
+}
