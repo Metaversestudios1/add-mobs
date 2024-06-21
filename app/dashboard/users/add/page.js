@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import Link from "next/link";
 
-const page = () => {
+const Page = () => {
   const selectOptions = [
     { value: 'transaction-table', label: 'Transaction table' , key:1},
     { value: 'balance-table', label: 'Balance table' , key:2},
@@ -184,4 +184,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

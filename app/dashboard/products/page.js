@@ -4,8 +4,9 @@ import style from "../dashboard.module.css";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoReload } from "react-icons/io5";
+import Image from "next/image";
 
-const page = () => {
+const Page = () => {
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
   const [allproducts, setAllproducts] = useState([]);
@@ -109,7 +110,7 @@ const page = () => {
                         scope="row"
                         className="flex items-center  px-2 py-4 mx-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        <img src={`${item.mediaUrl}`} alt="img" className="h-10 mx-1  rounded-full"/>{item.title}
+                        <Image src={`${item.mediaUrl}`} alt="img" className="h-10 mx-1  rounded-full"/>{item.title}
                       </th>
                       <td className="px-6 py-4 mx-2">{item.description} </td>
                       <td className="px-6 py-4">{item.price} </td>
@@ -134,4 +135,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

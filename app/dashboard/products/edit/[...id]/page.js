@@ -5,7 +5,7 @@ import { useRouter} from "next/navigation";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import Link from "next/link";
 
-const page = ({params}) => {
+const Page = ({params}) => {
   const param = (params.id[0]).replace("%20", " "); 
   const router = useRouter()
   const [title, setTitle] = useState("");
@@ -141,4 +141,4 @@ const page = ({params}) => {
   );
 };
 
-export default page;
+export default Page;

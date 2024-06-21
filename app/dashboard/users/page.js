@@ -5,7 +5,7 @@ import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoReload } from "react-icons/io5";
 
-const page = () => {
+const Page = () => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -136,4 +136,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
