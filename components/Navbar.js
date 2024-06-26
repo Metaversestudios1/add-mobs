@@ -1,18 +1,17 @@
 "use client";
 import React from "react";
 import style from "../style/navbar.module.css";
-import { signOut, useSession } from "next-auth/react";
+import { signOut} from "next-auth/react";
+import { IoMdNotifications } from "react-icons/io";
 const Navbar = () => {
-
-  const session =   useSession()
-  const username = session?.data?.user?.name
   return (
     <nav>
-    <div className={`${style.container}`}>
-    <h3 className="text-xl">{username && username.charAt(0).toUpperCase() + username.slice(1)}</h3>
-      <button onClick={() => signOut({ callbackUrl: '/' })}>
-      log out
-    </button>
+      <div className={`${style.container} rounded-lg`}>
+      <h3>Admin Panel</h3>
+        <div className="flex items-center">
+          <IoMdNotifications className="text-2xl mx-6 cursor-pointer"/>
+          <button onClick={() => signOut({ callbackUrl: "/" })} className="mr-4">log out</button>
+        </div>
       </div>
     </nav>
   );

@@ -1,9 +1,7 @@
 
 
 import connectDb from "@/connection/mongoose";
-import Games from "@/models/Games";
-import SubUser from "@/models/SubUser";
-import UserDetails from "@/models/UserDetails";
+import AdminUsers from "@/models/AdminUsers";
 import { NextResponse } from "next/server";
 
 export const DELETE = async (req) => {
@@ -15,9 +13,7 @@ export const DELETE = async (req) => {
       return NextResponse.json({ success: false, error: 'Name parameter is required' });
     }
 
-    const del = await SubUser.deleteOne({ email:param });
-    const del2 = await Games.deleteOne({email:param})
-    const del3 = await UserDetails.deleteOne({email:param})
+    const del = await AdminUsers.deleteOne({ email:param });
     if (del.deletedCount === 0) {
       return NextResponse.json({ success: false, error: 'User not found' });
     }

@@ -10,4 +10,6 @@
 body {
   background-color: black;
   color: white;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
 }

@@ -1,15 +1,17 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+const { v4: uuidv4 } = require('uuid');
 
+// User Signup Details Schema
 const SubUserSchema = new mongoose.Schema({
-    name: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, require: true},
-    contact: {type: Number, required: true},
-    createdAt:{type:String, required: true},
-    role: {type: String, required: true},
-    permission: {type:String, required: true}
-    
-}, {timestamps:true})
+  userid: { type: String, default: uuidv4, unique: true },
+  name: { type: String, required: true },
+  password: {type: String, require: true},
+  contact: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  createdAt:{type:String, required: true},
+  wallet_balance: { type: Number, default: 0 },
+  is_blocked: { type: Boolean, default: false }
+});
+mongoose.models = {};
+export default mongoose.model('SubUser', SubUserSchema);
 
-mongoose.models ={}
-export default mongoose.model("SubUser", SubUserSchema)

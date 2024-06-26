@@ -3,11 +3,12 @@ import NextAuth from "next-auth";
 import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import SubUser from "@/models/SubUser";
+import AdminUsers from "@/models/AdminUsers";
 
 async function login(credentials) {
   try {
     await connectDb();
-    const user = await SubUser.findOne({ email: credentials.email });
+    const user = await AdminUsers.findOne({ email: credentials.email });
     if (!user) {
       throw new Error("User doesn't exist, You need to signUp first");
     }
