@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import style from "../dashboard.module.css";
-const page = () => {
+const Page = () => {
   const [spinCount, setSpinCount] = useState("");
   const [slotCount, setSlotCount] = useState("");
   const [scratchCount, setScratchCount] = useState("");
@@ -291,4 +291,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
