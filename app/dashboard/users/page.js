@@ -100,9 +100,10 @@ const Page = () => {
     <>
       {users.length > 0 ? (
         <div className={style.contentContainer}>
+        <div className=" my-7 mx-7 text-xl">Home/dashboard/users</div>
           <div>
-            <div className={style.search}>
-              <div className="flex items-center">
+            <div className={style.searchContainer}>
+              <div className={`${style.search} flex items-center`}>
                 <input
                   placeholder="Search "
                   type="text"
@@ -111,6 +112,8 @@ const Page = () => {
                   value={search}
                   onChange={handleChange}
                 />
+                <div className={`${style.searchButton} flex items-center`}>
+
                 <button
                   onClick={handleSearch}
                   className="bg-blue-800 text-white p-2 my-5  text-sm rounded-lg"
@@ -121,6 +124,7 @@ const Page = () => {
                   onClick={handleReladData}
                   className="cursor-pointer text-xl mx-5"
                 />
+                </div>
               </div>
               <Link href="/dashboard/users/add">
                 <button className="bg-blue-800 text-white p-3 m-5 text-sm rounded-lg">

@@ -5,34 +5,69 @@ import { NextResponse } from "next/server";
 export const PUT = async (req) => {
   await connectDb();
   const {
-    spinCount,
-    flipCount,
-    slotCount,
     scratchCount,
-    dailyBonus,
-    adsBonus,
-    loginBonus,
+    scratchBonus,
+    wheelBonus,
+    wheelCount,
+    slotCount,
     slotBonus,
-    spinBonus,
-    maxWithdraw,
+    flipCount,
+    flipBonus,
   } = await req.json();
   try {
-    await Games.updateMany(
-      {},
-      {
-        $set: {
-          spin_wheel: { spin_count: spinCount, spin_bonus: spinBonus },
-          lucky_slot: { lucky_count: slotCount, slot_bonus: slotBonus },
-          scratch_card: { card_count: scratchCount },
-          flip_card: { flip_count: flipCount },
-          daily_bonus: dailyBonus,
-          ads_bonus: adsBonus,
-          login_bonus: loginBonus,
-          max_withdraw_amt: maxWithdraw,
-        },
-      }
-    );
-    return NextResponse.json({success: true})
+    if (scratchBonus && scratchCount) {
+      await Games.updateMany(
+        {},
+        {
+          $set: {
+            scratch_card: {
+              card_count: parseInt(scratchCount),
+              card_bonus: parseInt(scratchBonus),
+            },
+          },
+        }
+      );
+      return NextResponse.json({ success: true });
+    } else if (wheelCount && wheelBonus) {
+      await Games.updateMany(
+        {},
+        {
+          $set: {
+            spin_wheel: {
+              spin_count: parseInt(wheelCount),
+              spin_bonus: parseInt(wheelBonus),
+            },
+          },
+        }
+      );
+      return NextResponse.json({ success: true });
+    } else if (slotCount && slotBonus) {
+      await Games.updateMany(
+        {},
+        {
+          $set: {
+            lucky_slot: {
+              lucky_count: parseInt(slotCount),
+              slot_bonus: parseInt(slotBonus),
+            },
+          },
+        }
+      );
+      return NextResponse.json({ success: true });
+    } else if (flipCount && flipBonus) {
+      await Games.updateMany(
+        {},
+        {
+          $set: {
+            flip_card: {
+              flip_count: parseInt(flipCount),
+              flip_bonus: parseInt(flipBonus),
+            },
+          },
+        }
+      );
+      return NextResponse.json({ success: true });
+    }
   } catch (err) {
     return NextResponse.json({ success: false, err: err });
   }

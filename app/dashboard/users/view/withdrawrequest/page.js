@@ -1,69 +1,115 @@
-
-import React from "react";
+"use client"
+import React, { useState } from "react";
 
 const Page = () => {
-  
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [rows, setRows] = useState([
+    {
+      name: "Pratham",
+      bankName: "Bank of India",
+      bankAccount: "25143145",
+      ifseCode: "BKID013120",
+      amount: 1000,
+      upi: "95632@ybl",
+      date: "2024-06-01"
+    },
+    {
+      name: "Pratham",
+      bankName: "Bank of India",
+      bankAccount: "725143145",
+      ifseCode: "BKID013120",
+      amount: 1000,
+      upi: "95632@ybl",
+      date: "2024-06-15"
+    }
+  ]);
+
+  const filteredRows = rows.filter(row => {
+    const rowDate = new Date(row.date);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return (
+      (!startDate || rowDate >= start) &&
+      (!endDate || rowDate <= end)
+    );
+  });
 
   return (
-        <div className="bg-gray-900 rounded-lg mt-5">
-          <h2 className="ml-10 text-2xl my-5">Withdraw Requests</h2>
-            <div class="relative overflow-x-auto m-10 mt-0 rounded-lg">
-              <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" class="px-6 py-3">
-                      account Holder name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      bank name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      bank account
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      ifse code
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      Withdraw amount
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      UPI  id(optional)
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th
-                      scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                    Pratham
-                    </th>
-                    <td class="px-6 py-4">Bank of India</td>
-                    <td class="px-6 py-4">25143145</td>
-                    <td class="px-6 py-4">BKID013120</td>
-                    <td class="px-6 py-4">1000</td>
-                    <td class="px-6 py-4">95632@ybl</td>
-                  </tr>
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th
-                      scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                    Pratham
-                    </th>
-                    <td class="px-6 py-4">Bank of India</td>
-                    <td class="px-6 py-4">725143145</td>
-                    <td class="px-6 py-4">BKID013120</td>
-                    <td class="px-6 py-4">1000</td>
-                    <td class="px-6 py-4">95632@ybl</td>
-                  </tr>
-                 
-                </tbody>
-              </table>
-            </div>
-          </div>
-      
+    <div className="bg-gray-900 rounded-lg mt-5">
+      <h2 className="ml-10 text-2xl my-5">Withdraw Requests</h2>
+      <div className="ml-10 mb-4 flex">
+      <div className="flex flex-col">
+      <label htmlFor="startdate" className="text-sm my-2">Start date:</label>
+        <input
+          type="date"
+          placeholder="Start Date"
+          value={startDate}
+          onChange={e => setStartDate(e.target.value)}
+          className="p-2 rounded mr-2 bg-black"
+          id="startdate"
+        />
+        </div>
+        <div className="flex flex-col">
+        <label htmlFor="enddate" className="text-sm my-2">End date:</label>
+        <input
+          type="date"
+          placeholder="End Date"
+          value={endDate}
+          onChange={e => setEndDate(e.target.value)}
+          className="p-2 rounded bg-black"
+          id = "enddate"
+        />
+        </div>
+      </div>
+      <div className="relative overflow-x-auto m-10 mt-0 rounded-lg">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Account Holder Name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Bank Name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Bank Account
+              </th>
+              <th scope="col" className="px-6 py-3">
+                IFSC Code
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Withdraw Amount
+              </th>
+              <th scope="col" className="px-6 py-3">
+                UPI ID (optional)
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Date
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredRows.map((row, index) => (
+              <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {row.name}
+                </th>
+                <td className="px-6 py-4">{row.bankName}</td>
+                <td className="px-6 py-4">{row.bankAccount}</td>
+                <td className="px-6 py-4">{row.ifseCode}</td>
+                <td className="px-6 py-4">{row.amount}</td>
+                <td className="px-6 py-4">{row.upi}</td>
+                <td className="px-6 py-4">{row.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 

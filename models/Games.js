@@ -11,10 +11,12 @@ const GamesSchema = mongoose.Schema({
         slot_bonus: {type: Number}
     },
     scratch_card: {
-        card_count:{type: Number}
+        card_count:{type: Number},
+        card_bonus: {type: Number}
     },
     flip_card: {
-        flip_count:{type: Number}
+        flip_count:{type: Number},
+        flip_bonus: {type: Number}
     },
     daily_bonus: {type: Number},
     ads_bonus: {type: Number},

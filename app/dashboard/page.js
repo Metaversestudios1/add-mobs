@@ -1,118 +1,244 @@
-
+import connectDb from "@/connection/mongoose";
+import AdminUsers from "@/models/AdminUsers";
+import SubUser from "@/models/SubUser";
+import Link from "next/link";
 import React from "react";
 
-const Home = () => {
+const getUserCount = async () => {
+  await connectDb();
+  try {
+    const count = await SubUser.find().countDocuments();
+    return count;
+  } catch (err) {
+    return err;
+  }
+};
+const getAdminCount = async () => {
+  await connectDb();
+  try {
+    const count = await AdminUsers.find().countDocuments();
+    return count;
+  } catch (err) {
+    return err;
+  }
+};
+
+const Page = async () => {
+  const count = await getUserCount();
+  const adminCount = await getAdminCount();
   return (
-    <div className="relative text-center text-4xl mt-10 ">
-    <div className=" flex flex-wrap gap-x-4 gap-y-12 bg-gray-900 px-4 py-20 lg:px-20 ">
-    <span className="text-3xl absolute top-4">Statistics</span>
-    <div className="flex w-72 my-10">
-          <div className="flex  w-full max-w-full flex-col break-words rounded-lg border border-gray-100 bg-white text-gray-600 shadow-lg">
-            <div className="p-3">
-              <div className="absolute -mt-10 h-16 w-16 rounded-xl bg-gradient-to-tr from-gray-700 to-gray-400 text-center text-white shadow-lg">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mt-4 h-7 w-16"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-              </div>
-              <div className="pt-1 text-right">
-                <p className="text-sm font-light capitalize">Pageviews</p>
-                <h4 className="text-2xl font-semibold tracking-tighter xl:text-2xl">
-                  14,000
-                </h4>
+    <div>
+      <div className="p-6 bg-gray-900 mt-5 rounded-lg">
+      <div className=" m-2 mb-5 text-xl">Home/dashboard</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          <div className="bg-gray-800 rounded-md border  p-6 shadow-md shadow-black/5">
+            <div className="flex justify-between mb-6">
+              <div>
+                <div className="flex items-center mb-1">
+                  <div className="text-2xl font-semibold">{count}</div>
+                </div>
+                <div className="text-sm font-medium text-gray-400">Users</div>
               </div>
             </div>
-            <hr className="opacity-50" />
-            <div className="p-4">
-              <p className="font-light">
-                <span className="text-sm font-bold text-green-600">+22% </span>vs
-                last month
-              </p>
+
+            <Link
+              href="/dashboard/users"
+              className="text-[#f84525] font-medium text-sm hover:text-red-800"
+            >
+              View
+            </Link>
+          </div>
+          <div className="bg-gray-800 rounded-md border  p-6 shadow-md shadow-black/5">
+            <div className="flex justify-between mb-4">
+              <div>
+                <div className="flex items-center mb-1">
+                  <div className="text-2xl font-semibold">4</div>
+                </div>
+                <div className="text-sm font-medium text-gray-400">Game Counts</div>
+              </div>
             </div>
+            <a
+              href="/dierenartsen"
+              className="text-[#f84525] font-medium text-sm hover:text-red-800"
+            >
+              View
+            </a>
+          </div>
+          <div className="bg-gray-800 rounded-md border  p-6 shadow-md shadow-black/5">
+            <div className="flex justify-between mb-6">
+              <div>
+                <div className="text-2xl font-semibold mb-1">20</div>
+                <div className="text-sm font-medium text-gray-400">Withdraws</div>
+              </div>
+            </div>
+            <Link
+              href=""
+              className="text-[#f84525] font-medium text-sm hover:text-red-800"
+            >
+              View
+            </Link>
           </div>
         </div>
-        <div className="flex w-72 my-10">
-          <div className="flex w-full max-w-full flex-col break-words rounded-lg border border-gray-100 bg-white text-gray-600 shadow-lg">
-            <div className="p-3">
-              <div className="absolute -mt-10 h-16 w-16 rounded-xl bg-gradient-to-tr from-blue-700 to-blue-500 text-center text-white shadow-lg">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mt-4 h-7 w-16"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div className="p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words dark:bg-gray-800 w-full shadow-lg rounded border-[1px]  border-white">
+            <div className="rounded-t mb-0 px-0 border-0">
+              <div className="flex flex-wrap items-center px-4 py-2">
+                <div className="relative w-full max-w-full flex-grow flex-1">
+                  <h3 className="font-semibold text-base text-gray-900 dark:text-gray-50">
+                    Users
+                  </h3>
+                </div>
               </div>
-              <div className="pt-1 text-right">
-                <p className="text-sm font-light capitalize">Users</p>
-                <h4 className="text-2xl font-semibold tracking-tighter xl:text-2xl">
-                  2,300
-                </h4>
+              <div className="block w-full overflow-x-auto">
+                <table className="items-center w-full bg-transparent border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        Role
+                      </th>
+                      <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        Amount
+                      </th>
+                      <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="text-gray-700 dark:text-gray-100">
+                      <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                        Login Users
+                      </th>
+                      <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {count} 
+                      </td>
+                      <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div className="flex items-center">
+                          <span className="mr-2">70%</span>
+                          <div className="relative w-full">
+                            <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
+                              <div
+                                style={{ width: "70%" }}
+                                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr className="text-gray-700 dark:text-gray-100">
+                      <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                        Sub Admin
+                      </th>
+                      <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {adminCount}
+                      </td>
+                      <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div className="flex items-center">
+                          <span className="mr-2">40%</span>
+                          <div className="relative w-full">
+                            <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
+                              <div
+                                style={{ width: "40%" }}
+                                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </div>
-            <hr className="opacity-50" />
-            <div className="p-4">
-              <p className="font-light">
-                <span className="text-sm font-bold text-green-600">+3% </span>vs
-                last month
-              </p>
             </div>
           </div>
-        </div>
-        <div className="flex w-72 my-10">
-          <div className="flex w-full max-w-full flex-col break-words rounded-lg border border-gray-100 bg-white text-gray-600 shadow-lg">
-            <div className="p-3">
-              <div className="absolute -mt-10 h-16 w-16 rounded-xl bg-gradient-to-tr from-emerald-700 to-emerald-500 text-center text-white shadow-lg">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mt-4 h-7 w-16"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
+          <div className="bg-gray-800 border shadow-md shadow-black/5 p-6 rounded-md">
+            <div className="flex justify-between mb-4 items-start">
+              <div className="font-medium">Activities</div>
+              <div className="dropdown">
+                <button
+                  type="button"
+                  className="dropdown-toggle text-white hover:text-gray-600"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <div className="pt-1 text-right">
-                <p className="text-sm font-light capitalize">Sales</p>
-                <h4 className="text-2xl font-semibold tracking-tighter xl:text-2xl">
-                  Rs 2,25,360
-                </h4>
+                  <i className="ri-more-fill"></i>
+                </button>
+                <ul className="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
+                  <li>
+                    <a
+                      href="#"
+                      className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
+                    >
+                      Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
+                    >
+                      Settings
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
-            <hr className="opacity-50" />
-            <div className="p-4">
-              <p className="font-light">
-                <span className="text-sm font-bold text-red-600">-3% </span>vs last
-                month
-              </p>
+            <div className="overflow-hidden ">
+              <table className="w-full min-w-[540px] ">
+                <tbody>
+                  <tr>
+                    <td className="py-2 px-4 border-b border-b-gray-50 ">
+                      <div className="flex items-center">
+                        <a
+                          href="#"
+                          className="text-gray-600 text-sm font-medium hover:text-white ml-2 truncate"
+                        >
+                          Lorem Ipsum
+                        </a>
+                      </div>
+                    </td>
+                    <td className="py-2 px-4 border-b border-b-gray-50">
+                      <span className="text-[13px] font-medium text-gray-400">
+                        02-02-2024
+                      </span>
+                    </td>
+                    <td className="py-2 px-4 border-b border-b-gray-50">
+                      <span className="text-[13px] font-medium text-gray-400">
+                        17.45
+                      </span>
+                    </td>
+                    <td className="py-2 px-4 border-b border-b-gray-50"></td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-4 border-b border-b-gray-50">
+                      <div className="flex items-center">
+                        <a
+                          href="#"
+                          className="text-gray-600 text-sm font-medium hover:text-white blue-500 ml-2 truncate"
+                        >
+                          Lorem Ipsum
+                        </a>
+                      </div>
+                    </td>
+                    <td className="py-2 px-4 border-b border-b-gray-50">
+                      <span className="text-[13px] font-medium text-gray-400">
+                        02-02-2024
+                      </span>
+                    </td>
+                    <td className="py-2 px-4 border-b border-b-gray-50">
+                      <span className="text-[13px] font-medium text-gray-400">
+                        17.45
+                      </span>
+                    </td>
+                    <td className="py-2 px-4 border-b border-b-gray-50"></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -121,4 +247,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Page;
