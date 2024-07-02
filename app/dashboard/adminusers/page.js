@@ -116,6 +116,7 @@ const Page = () => {
                 <FaAngleRight onClick={(e) => {
                   e.preventDefault();
                   setUsersPerPage(entry);
+                  setCurrentPage(1)
                 }} className="text-xl ml-1 cursor-pointer" />
               </div>
             </div>

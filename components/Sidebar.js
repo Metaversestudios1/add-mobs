@@ -5,19 +5,46 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 
 const Sidebar = () => {
+  const gameSetting = [
+    {
+      name: "Lucky Wheel",
+      href: "/dashboard/setting/luckywheel",
+    },
+    {
+      name: "Lucky slot",
+      href: "/dashboard/setting/luckyslot",
+    },
+    {
+      name: "Scratch Card",
+      href: "/dashboard/setting/scratchcard",
+    },
+    {
+      name: "Flip Card",
+      href: "/dashboard/setting/flipcard",
+    },
+    {
+      name: "Max Withdraw",
+      href: "/dashboard/setting/maxwithdraw",
+    },
+  ];
+
   const [gameSection, setGameSection] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+  console.log(sidebarOpen);
   return (
     <div>
-      <button
-        data-drawer-target="default-sidebar"
-        data-drawer-toggle="default-sidebar"
-        aria-controls="default-sidebar"
-        type="button"
+    <button
+    onClick={toggleSidebar}
         className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-      >
+  
+  >
         <span className="sr-only">Open sidebar</span>
         <svg
-          className="w-6 h-6"
+          className="w-6 h-6 z-50"
           aria-hidden="true"
           fill="currentColor"
           viewBox="0 0 20 20"
@@ -32,11 +59,13 @@ const Sidebar = () => {
       </button>
 
       <aside
-        id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 "
-        aria-label="Sidebar"
+      className={`fixed top-0 left-0 z-10 w-64 h-screen  bg-gray-50 dark:bg-gray-900 
+        ${!sidebarOpen && "translate-x-0"} transition-transform ${
+        sidebarOpen ? '-translate-x-full' : 'translate-x-0'
+      }`}
+      aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900 max-sm:mt-14">
           <ul className="space-y-2 font-medium">
             <li>
               <Link
@@ -132,58 +161,41 @@ const Sidebar = () => {
                 setGameSection(!gameSection);
               }}
             >
-              <div
-                
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
-              >
+              <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
                 <IoSettingsOutline className="text-2xl" />
                 <span className="flex items-center justify-between flex-1 ms-3 whitespace-nowrap">
-                  Game Setting {gameSection?<FaAngleDown/>:<FaAngleRight/>}
+                  Game Setting{" "}
+                  {gameSection ? <FaAngleDown /> : <FaAngleRight />}
                 </span>
               </div>
             </li>
-            {gameSection && <ul>
+            {gameSection && (
+              <ul>
+              {gameSetting.map((game, i)=>{
+                  return (<li key={i}>
+                    <Link
+                      href={game.href}
+                      className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    >
+                      <span className="flex-1 ml-14 whitespace-nowrap">
+                      {game.name}
+                      </span>
+                    </Link>
+                  </li>)
+                }) }
+                
+                </ul>
+              )}
               <li>
-                <Link
-                  href="/dashboard/setting/luckywheel"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <span className="flex-1 ml-14 whitespace-nowrap">
-                    Lucky Wheel
+              <Link href="/dashboard/adssetting">
+                <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
+                  <IoSettingsOutline className="text-2xl" />
+                  <span className="flex items-center justify-between flex-1 ms-3 whitespace-nowrap">
+                    Ads Setting{" "}
                   </span>
-                </Link>
+                </div>
+              </Link>
               </li>
-              <li>
-                <Link
-                  href="/dashboard/setting/luckyslot"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <span className="flex-1 ml-14 whitespace-nowrap">
-                    Lucky slot
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/setting/scratchcard"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <span className="flex-1 ml-14 whitespace-nowrap">
-                    Scratch Card
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/setting/flipcard"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <span className="flex-1 ml-14 whitespace-nowrap">
-                    Flip Card
-                  </span>
-                </Link>
-              </li>
-            </ul>}
           </ul>
         </div>
       </aside>

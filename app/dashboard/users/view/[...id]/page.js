@@ -33,7 +33,6 @@ const Page = ({ params }) => {
       });
       const response = await res.json();
       setEmail(response.data[0].email);
-      setBlock(response.data[0].is_blocked);
     } catch (err) {
       console.log("something wrong", err);
     }
@@ -82,44 +81,69 @@ const Page = ({ params }) => {
                 <p className="text-center text-2xl my-5 underline">
                   User Detail
                 </p>
-                
               </div>
-              <div className="flex text-2xl mb-5">
-                <div className="mx-5">Email:</div>
-                <div className="mx-5">{userDetail?.email}</div>
-              </div>
-              <div className="flex text-2xl mb-5">
-                <div className="mx-5">Wallet balance:</div>
-                <div className="mx-5">{userDetail?.wallet_balance}</div>
-              </div>
-              <div className="flex text-2xl mb-5">
-                <div className="mx-5">Spin count:</div>
-                <div className="mx-5">{gameDetail?.spin_wheel?.spin_count}</div>
-              </div>
-              <div className="flex text-2xl mb-5">
-                <div className="mx-5">Slot count:</div>
-                <div className="mx-5">
-                  {gameDetail?.lucky_slot?.lucky_count}
+              <div className="flex">
+                <div>
+                  <div className="flex text-2xl mb-5">
+                    <div className="mx-5">Email:</div>
+                    <div className="mx-5">{userDetail?.email}</div>
+                  </div>
+                  <div className="flex text-2xl mb-5">
+                    <div className="mx-5">Wallet balance:</div>
+                    <div className="mx-5">{userDetail?.wallet_balance}</div>
+                  </div>
+                  <div className="flex text-2xl mb-5">
+                    <div className="mx-5">Spin count:</div>
+                    <div className="mx-5">
+                      {gameDetail?.spin_wheel?.spin_count}
+                    </div>
+                  </div>
+                  <div className="flex text-2xl mb-5">
+                    <div className="mx-5">Slot count:</div>
+                    <div className="mx-5">
+                      {gameDetail?.lucky_slot?.lucky_count}
+                    </div>
+                  </div>
+                  <div className="flex text-2xl mb-5">
+                    <div className="mx-5">Flip count:</div>
+                    <div className="mx-5">
+                      {gameDetail?.flip_card?.flip_count}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex text-2xl mb-5">
-                <div className="mx-5">Flip count:</div>
-                <div className="mx-5">{gameDetail?.flip_card?.flip_count}</div>
-              </div>
-              <div className="flex text-2xl mb-5">
-                <div className="mx-5">Scratch count:</div>
-                <div className="mx-5">
-                  {gameDetail?.scratch_card?.card_count}
+                <div>
+                  <div className="flex text-2xl mb-5">
+                    <div className="mx-5">Scratch count:</div>
+                    <div className="mx-5">
+                      {gameDetail?.scratch_card?.card_count}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="flex justify-end">
-        <Link href={`/dashboard/users/view/transaction`}><button className="rounded-lg  py-2 px-8 m-5 bg-green-900">Transaction History</button></Link>
-        <Link href={`/dashboard/users/view/withdrawrequest`}><button className="rounded-lg  py-2 px-8 m-5 bg-green-900">Withdraw Requests</button></Link>
-        <Link href={`/dashboard/users/view/adscount`}><button className="rounded-lg  py-2 px-8 m-5 bg-green-900">Ads Count</button></Link>
-        </div>
-          
+          <Link href={`/dashboard/users/view/scores`}>
+          <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
+            Scores
+          </button>
+        </Link>
+            <Link href={`/dashboard/users/view/transaction`}>
+              <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
+                Transaction History
+              </button>
+            </Link>
+            <Link href={`/dashboard/users/view/withdrawrequest`}>
+              <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
+                Withdraw Requests
+              </button>
+            </Link>
+            <Link href={`/dashboard/users/view/adscount`}>
+              <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
+                Ads Count
+              </button>
+            </Link>
+          </div>
         </div>
       ) : (
         <div role="status" className="flex justify-center items-center h-full">
@@ -147,49 +171,3 @@ const Page = ({ params }) => {
 };
 
 export default Page;
-// <div className="flex justify-evenly">
-//   <div className="flex flex-col justify-center">
-//     <div className="text-center text-2xl my-6">
-//       Transaction History
-//     </div>
-//     <div className="flex">
-//       <div className="ml-4">
-//         <div className="mb-2 text-lg">Date :</div>
-//         <div className="mb-2 text-lg">Credit Amount :</div>
-//         <div className="mb-2 text-lg">Debit Amount :</div>
-//         <div className="mb-2 text-lg">Wallet Balance :</div>
-//         <div className="mb-2 text-lg">Withdraw Amount :</div>
-//       </div>
-//       <div className="ml-4">
-//         <div className="mb-2 text-lg">5:19 6/24/2024</div>
-//         <div className="mb-2 text-lg">--</div>
-//         <div className="mb-2 text-lg">600</div>
-//         <div className="mb-2 text-lg">100</div>
-//         <div className="mb-2 text-lg">600</div>
-//       </div>
-//     </div>
-//   </div>
-//   <div>
-//     <div className="flex flex-col justify-center">
-//       <div className="text-center text-2xl my-6">
-//         Withdraw Request
-//       </div>
-//       <div className="flex">
-//         <div className="ml-4">
-//           <div className="mb-2 text-lg">Bank name :</div>
-//           <div className="mb-2 text-lg">A/C holder name :</div>
-//           <div className="mb-2 text-lg">A/C number :</div>
-//           <div className="mb-2 text-lg">IFSE code :</div>
-//           <div className="mb-2 text-lg">Withdraw Amount :</div>
-//         </div>
-//         <div className="ml-4">
-//           <div className="mb-2 text-lg">Bank of India</div>
-//           <div className="mb-2 text-lg">Gurpreet singh</div>
-//           <div className="mb-2 text-lg">56436413</div>
-//           <div className="mb-2 text-lg">BOI644132</div>
-//           <div className="mb-2 text-lg">1000</div>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// </div>
