@@ -30,8 +30,9 @@ export const GET = async (req) => {
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit) // Skip records based on page number
       .limit(limit); // Limit the number of records per page
-
-    return NextResponse.json({ data: userdata });
+    const count = await SubUser.find().countDocuments()
+    console.log(count)
+    return NextResponse.json({ data: userdata, count:count });
   } catch (err) {
     return NextResponse.json({ err: err });
   }

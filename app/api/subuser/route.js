@@ -22,7 +22,7 @@ export const POST = async (req) => {
       ":" +
       date.getMinutes();
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    console.log(time)
     let subuser = new SubUser({
       name,
       email,

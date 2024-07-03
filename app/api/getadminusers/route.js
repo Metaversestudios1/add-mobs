@@ -13,8 +13,8 @@ export const GET = async (req) => {
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit) // Skip records based on page number
       .limit(limit);
-
-    return NextResponse.json({ data: adminUsers });
+    const count = await AdminUsers.find().countDocuments()
+    return NextResponse.json({ data: adminUsers, count: count });
   } catch (err) {
     return NextResponse.json({ err: err });
   }

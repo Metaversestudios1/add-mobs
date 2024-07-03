@@ -19,7 +19,7 @@ const Page = () => {
 
   return (
     <div className={`${style.contentContainer}`}>
-      <div className=" my-7 mx-7 text-xl">Home/dashboard/ads setting</div>
+      <div className="p-6 mx-7 text-xl">Home/dashboard/ads setting</div>
       <div className="flex flex-col mx-2  items-center">
         <div className="w-1/2">
           <label

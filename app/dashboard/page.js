@@ -1,48 +1,40 @@
-import connectDb from "@/connection/mongoose";
-import AdminUsers from "@/models/AdminUsers";
-import SubUser from "@/models/SubUser";
+"use client"
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const getUserCount = async () => {
-  await connectDb();
-  try {
-    const count = await SubUser.find().countDocuments();
-    return count;
-  } catch (err) {
-    return err;
-  }
-};
-const getAdminCount = async () => {
-  await connectDb();
-  try {
-    const count = await AdminUsers.find().countDocuments();
-    return count;
-  } catch (err) {
-    return err;
-  }
-};
 
-const Page = async () => {
-  const count = await getUserCount();
-  const adminCount = await getAdminCount();
+
+const Page =  () => {
+  const [userCount, setUserCount] = useState(0)
+  const [adminCount, setAdminCount] = useState(0)
+  useEffect(()=>{
+    fetchCount()
+  },[])
+  const fetchCount = async() =>{
+    const res = await fetch ("/api/getadminusers")
+    const response = await res.json() 
+    setAdminCount(response.count)
+    const res2 = await fetch ("/api/alluserdata")
+    const response2 = await res2.json() 
+    setUserCount(response2.count)
+  }
   return (
     <div>
-      <div className="p-6 bg-gray-900 mt-5 rounded-lg">
-      <div className=" m-2 mb-5 text-xl">Home/dashboard</div>
+      <div className="p-6 ml-2 mt-2 bg-gray-900 ">
+      <div className=" m-2 mb-5 text-xl">Dashboard</div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           <div className="bg-gray-800 rounded-md border  p-6 shadow-md shadow-black/5">
             <div className="flex justify-between mb-6">
               <div>
                 <div className="flex items-center mb-1">
-                  <div className="text-2xl font-semibold">{count}</div>
+                  <div className="text-2xl font-semibold">{userCount}</div>
                 </div>
                 <div className="text-sm font-medium text-gray-400">Users</div>
               </div>
             </div>
 
             <Link
-              href="/dashboard/users"
+              href=""
               className="text-[#f84525] font-medium text-sm hover:text-red-800"
             >
               View
@@ -58,7 +50,7 @@ const Page = async () => {
               </div>
             </div>
             <a
-              href="/dierenartsen"
+              href=""
               className="text-[#f84525] font-medium text-sm hover:text-red-800"
             >
               View
@@ -108,7 +100,7 @@ const Page = async () => {
                         Login Users
                       </th>
                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {count} 
+                        {userCount} 
                       </td>
                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <div className="flex items-center">

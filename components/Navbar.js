@@ -6,7 +6,7 @@ import { IoMdNotifications } from "react-icons/io";
 const Navbar = () => {
   return (
     <nav>
-      <div className={`${style.container} rounded-lg`}>
+      <div className={`${style.container} `}>
       <h3>Admin Panel</h3>
         <div className="flex items-center">
           <IoMdNotifications className="text-2xl mx-6 cursor-pointer"/>

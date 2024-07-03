@@ -8,21 +8,19 @@ import { GrFormView } from "react-icons/gr";
 import { ImBlocked } from "react-icons/im";
 import { MdDelete } from "react-icons/md";
 import { CgUnblock } from "react-icons/cg";
-import { FaAngleRight } from "react-icons/fa";
-import { IoIosArrowRoundBack } from "react-icons/io";
 
 const Page = () => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [block, setBlock] = useState(false);
-  const [entry, setEntry] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(5);
+  const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
     fetchUserData();
-  }, [currentPage, usersPerPage]); // Only fetch users once on component mount
+  }, [currentPage, usersPerPage, users]);
 
   const fetchUserData = async () => {
     try {
@@ -33,6 +31,7 @@ const Page = () => {
         throw new Error("Network response was not ok");
       }
       const data = await res.json();
+      setTotalUsers(data.count);
       if (data && data.data) {
         setUsers(data.data);
         setAllUsers(data.data);
@@ -48,8 +47,6 @@ const Page = () => {
   const handleChange = (e) => {
     if (e.target.name === "search") {
       setSearch(e.target.value);
-    } else if (e.target.name === "entry") {
-      setEntry(e.target.value);
     }
   };
 
@@ -70,7 +67,12 @@ const Page = () => {
     const filteredData = allUsers.filter((user) =>
       user.name.toLowerCase().includes(lowercaseSearch)
     );
-    setUsers(filteredData);
+    if (filteredData.length > 0) {
+      setUsers(filteredData);
+    } else {
+      alert("User not found!");
+      setSearch("");
+    }
   };
 
   const handleReladData = () => {
@@ -97,11 +99,12 @@ const Page = () => {
   // const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
   // console.log(currentPage);
+  const startIndex = (currentPage - 1) * usersPerPage;
   return (
     <>
       {users.length > 0 ? (
-        <div className={style.contentContainer}>
-        <div className=" my-7 mx-7 text-xl">Home/dashboard/users</div>
+        <div className={`${style.contentContainer} ml-2 mt-2`}>
+          <div className="p-6 text-xl">Users</div>
           <div>
             <div className={style.searchContainer}>
               <div className={`${style.search} flex items-center`}>
@@ -114,17 +117,16 @@ const Page = () => {
                   onChange={handleChange}
                 />
                 <div className={`${style.searchButton} flex items-center`}>
-
-                <button
-                  onClick={handleSearch}
-                  className="bg-blue-800 text-white p-2 my-5  text-sm rounded-lg"
-                >
-                  Search
-                </button>
-                <IoReload
-                  onClick={handleReladData}
-                  className="cursor-pointer text-xl mx-5"
-                />
+                  <button
+                    onClick={handleSearch}
+                    className="bg-blue-800 text-white p-2 my-5  text-sm rounded-lg"
+                  >
+                    Search
+                  </button>
+                  <IoReload
+                    onClick={handleReladData}
+                    className="cursor-pointer text-xl mx-5"
+                  />
                 </div>
               </div>
               <Link href="/dashboard/users/add">
@@ -132,24 +134,6 @@ const Page = () => {
                   Add New
                 </button>
               </Link>
-            </div>
-            <div className="flex mx-7 items-center">
-              <div>Showing</div>
-              <input
-                type="text"
-                name="entry"
-                className="w-8 text-xs mx-2 rounded h-7 bg-black"
-                value={entry}
-                onChange={handleChange}
-              />
-              <div className="flex items-center">
-                enteries
-                <FaAngleRight onClick={(e) => {
-                  e.preventDefault();
-                  setUsersPerPage(entry);
-                  setCurrentPage(1)
-                }} className="text-xl ml-1 cursor-pointer" />
-              </div>
             </div>
           </div>
           <div className={style.userTable}>
@@ -175,7 +159,7 @@ const Page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((item) => (
+                  {users.map((item, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                       key={item._id}
@@ -184,7 +168,7 @@ const Page = () => {
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        {item.name}
+                        {startIndex + index + 1} {item.name}
                       </th>
                       <td className="px-6 py-4">{item.email} </td>
                       <td className="px-6 py-4">{item.contact} </td>
@@ -233,11 +217,16 @@ const Page = () => {
             </div>
           </div>
           <div className="container flex justify-end">
+            <div className="text-lg">
+              Showing {startIndex + 1} to{" "}
+              {Math.min(startIndex + usersPerPage, totalUsers)} of {totalUsers}{" "}
+              entries
+            </div>
             <div className="flex flex-row mx-10 mb-10">
               <button
                 type="button"
                 className="bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-red-700 hover:text-white px-3"
-                onClick={() =>setCurrentPage(currentPage - 1)}
+                onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage === 1}
               >
                 <div className="flex flex-row align-middle">
@@ -260,7 +249,7 @@ const Page = () => {
                 type="button"
                 className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-red-700 hover:text-white px-3"
                 onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={users.length<usersPerPage }
+                disabled={users.length < usersPerPage || startIndex + usersPerPage >= totalUsers}
               >
                 <div className="flex flex-row align-middle">
                   <span className="mr-2">Next</span>
@@ -307,4 +296,3 @@ const Page = () => {
 };
 
 export default Page;
-

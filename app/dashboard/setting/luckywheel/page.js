@@ -25,7 +25,7 @@ const Page = () => {
     }
   return (
     <div className={`${style.contentContainer}`}>
-      <div className=" m-5 mb-5 text-lg">Home/dashboard/setting/luckywheel</div>
+      <div className="p-6 text-lg">Luckywheel</div>
       <div className="">
         <div className="flex flex-col m-10 items-center">
           <div className="flex m-5 items-center">

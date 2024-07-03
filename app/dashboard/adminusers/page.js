@@ -5,23 +5,24 @@ import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoReload } from "react-icons/io5";
 import { IoEye } from "react-icons/io5";
-import { FaAngleRight } from "react-icons/fa";
 
 const Page = () => {
   const [search, setSearch] = useState("");
   const [adminUsers, setAdminUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
-  const [entry, setEntry] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(5);
+  const [totalAdminUsers, setTotalAdminUsers] = useState(0);
 
   useEffect(() => {
     fetchUserData();
-  },[currentPage, usersPerPage]); // Only fetch users once on component mount
+  },[currentPage, usersPerPage, adminUsers]); // Only fetch users once on component mount
 
   const fetchUserData = async () => {
     const res = await fetch(`/api/getadminusers?page=${currentPage}&limit=${usersPerPage}`);
     const data = await res.json();
+    
+    setTotalAdminUsers(data.count);
     setAdminUsers(data.data);
     setAllUsers(data.data);
   };
@@ -29,9 +30,6 @@ const Page = () => {
   const handleChange = (e) => {
     if (e.target.name === "search") {
       setSearch(e.target.value);
-    }
-    else if (e.target.name === "entry") {
-      setEntry(e.target.value);
     }
   };
 
@@ -55,19 +53,25 @@ const Page = () => {
       const lowercaseName = user.name.toLowerCase(); // Convert user name to lowercase
       return lowercaseName.includes(lowercaseSearch); // Check if user name includes the search query
     });
-    setAdminUsers(filteredData);
+    if (filteredData.length > 0) {
+      setAdminUsers(filteredData);
+    } else {
+      alert("User not found!");
+      setSearch("");
+    }
   };
 
   const handleReladData = () => {
     setSearch("");
     setAdminUsers(allUsers);
   };
+  const startIndex = (currentPage - 1) * usersPerPage;
 
   return (
     <>
       {adminUsers.length > 0 ? (
         <div className={`${style.contentContainer}`}>
-        <div className=" my-7 mx-7 text-xl">Home/dashboard/admin users</div>
+        <div className="p-6 text-xl">Admin users</div>
           <div>
             <div className={`${style.searchContainer}`}>
               <div className={`${style.search} flex items-center`}>
@@ -102,24 +106,6 @@ const Page = () => {
                 </button>
               </Link>
             </div>
-            <div className="flex mx-7 items-center">
-              <div>Showing</div>
-              <input
-                type="text"
-                name="entry"
-                className="w-8 text-xs mx-2 rounded h-7 bg-black"
-                value={entry}
-                onChange={handleChange}
-              />
-              <div className="flex items-center">
-                enteries
-                <FaAngleRight onClick={(e) => {
-                  e.preventDefault();
-                  setUsersPerPage(entry);
-                  setCurrentPage(1)
-                }} className="text-xl ml-1 cursor-pointer" />
-              </div>
-            </div>
           </div>
           <div className={`${style.userTable} `}>
             <div className="relative overflow-x-auto m-5 ">
@@ -144,7 +130,7 @@ const Page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {adminUsers.map((item) => {
+                  {adminUsers.map((item ,index) => {
                     return (
                       <tr
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -154,7 +140,7 @@ const Page = () => {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          {item.name}
+                        {startIndex + index + 1} {item.name}
                         </th>
                         <td className="px-6 py-4">{item.email} </td>
                         <td className="px-6 py-4 flex items-center">
@@ -189,6 +175,11 @@ const Page = () => {
             </div>
           </div>
           <div className="container flex justify-end">
+          <div className="text-lg">
+              Showing {startIndex + 1} to{" "}
+              {Math.min(startIndex + usersPerPage, totalAdminUsers)} of {totalAdminUsers}{" "}
+              entries
+            </div>
             <div className="flex flex-row mx-10 mb-10">
               <button
                 type="button"
@@ -216,7 +207,7 @@ const Page = () => {
                 type="button"
                 className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-red-700 hover:text-white px-3"
                 onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={adminUsers.length<usersPerPage }
+                disabled={adminUsers.length < usersPerPage || startIndex + usersPerPage >= totalAdminUsers}
               >
                 <div className="flex flex-row align-middle">
                   <span className="mr-2">Next</span>

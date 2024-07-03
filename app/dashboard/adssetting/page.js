@@ -151,7 +151,7 @@ theme: "dark",
         pauseOnHover
         theme="dark"
       />
-      <div className=" my-7 mx-7 text-xl">Home/dashboard/ads setting</div>
+      <div className="p-6 text-lg">Ads setting</div>
       <div className="flex mx-8 my-3">
         <div className=" flex">
           <input
@@ -173,8 +173,9 @@ theme: "dark",
         </div>
       </div>
 
-      <div className="flex flex-col mx-2  items-center">
-        <div className="w-1/2">
+      <div className="flex flex-col items-center">
+        <div className="flex">
+        <div className="mr-14 w-96">
           <div className="mt-4">
             <label>Set ads On/Off</label>
             <select
@@ -417,6 +418,31 @@ theme: "dark",
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
+          <form onSubmit={handleSubmit}>
+            {fields.map((field, index) => (
+              <div key={index} className="form-group mt-4">
+                <label htmlFor={field}>{field}</label>
+                <div className="flex ">
+                  <input
+                    type="text"
+                    id={field}
+                    name={field}
+                    value={adsSetting[field]}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveField(field)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </form>
+          </div>
+          <div className="ml-14 w-96">
           <div className="mt-4">
             <label>Admob Interstitial</label>
             <input
@@ -427,6 +453,7 @@ theme: "dark",
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
+          
           <div className="mt-4">
             <label>Admob open</label>
             <input
@@ -647,37 +674,16 @@ theme: "dark",
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
-          <form onSubmit={handleSubmit}>
-            {fields.map((field, index) => (
-              <div key={index} className="form-group mt-4">
-                <label htmlFor={field}>{field}</label>
-                <div className="flex ">
-                  <input
-                    type="text"
-                    id={field}
-                    name={field}
-                    value={adsSetting[field]}
-                    onChange={handleChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveField(field)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-          </form>
-
+          </div>
+          
+          </div>
+          
           <button
             onClick={handleSubmit}
-            className="bg-green-900 rounded-lg py-2 px-3 my-3"
+            className="bg-green-900 rounded-lg w-[100px] py-2 px-3 my-10"
           >
             Save
           </button>
-        </div>
       </div>
     </div>
   );
