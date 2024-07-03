@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function Page() {
   const router = useRouter();
   const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleChange = (e) => {
@@ -16,12 +17,14 @@ export default function Page() {
       setEmail(e.target.value);
     } else if (e.target.name == "password") {
       setPassword(e.target.value);
+    }else if (e.target.name == "contact") {
+      setContact(e.target.value);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { name, email, password };
+    const data = { name, email, password, contact };
     const res = await fetch("/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -67,6 +70,25 @@ export default function Page() {
                   name="name"
                   type="name"
                   autoComplete="name"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="contact"
+                className="block text-sm font-medium leading-6 text-white"
+              >
+                Mobile No.
+              </label>
+              <div className="mt-2">
+                <input
+                  value={contact}
+                  onChange={handleChange}
+                  id="contact"
+                  name="contact"
+                  type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

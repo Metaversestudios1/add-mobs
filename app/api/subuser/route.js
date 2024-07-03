@@ -35,7 +35,7 @@ export const POST = async (req) => {
       email: newUser.email,
       wallet_balance: newUser.wallet_balance,
       withdrawal_requests: [],
-      withdrawal_history: [],
+      withdrawal_history: [], 
       ads_count: {
         userid: newUser.userid,
         update_interstitial_ads: 0,

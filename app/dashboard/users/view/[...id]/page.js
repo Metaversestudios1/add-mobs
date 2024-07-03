@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import style from "@/app/dashboard/dashboard.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const Page = ({ params }) => {
   const param = params.id[0];
@@ -64,6 +65,9 @@ const Page = ({ params }) => {
     <>
       {userDetail ? (
         <div className="bg-gray-900 rounded-lg mt-5">
+        <Link href="/dashboard/users" className="text-5xl">
+        <IoIosArrowRoundBack />
+      </Link>
           <div className={`${style.detailContainer}`}>
             <div className={`${style.detailImage}`}>
               <div className="rounded-lg bg-white my-4 ml-10 h-60 w-60">

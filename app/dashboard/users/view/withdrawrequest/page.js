@@ -1,9 +1,17 @@
 "use client"
 import React, { useState } from "react";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { useRouter } from "next/navigation";
+
 
 const Page = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const router = useRouter()
+  const goBack= ()=>{
+    router.back()
+  }
+
   const [rows, setRows] = useState([
     {
       name: "Pratham",
@@ -37,6 +45,8 @@ const Page = () => {
 
   return (
     <div className="bg-gray-900 rounded-lg mt-5">
+    <IoIosArrowRoundBack className="text-5xl cursor-pointer" onClick={goBack}/>
+
       <h2 className="ml-10 text-2xl my-5">Withdraw Requests</h2>
       <div className="ml-10 mb-4 flex">
       <div className="flex flex-col">

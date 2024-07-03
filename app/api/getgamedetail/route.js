@@ -8,7 +8,7 @@ export const GET = async (req)=>{
         const {search} = new URL(req.url)
         const email = search.split("?")[1]
         const gameDetail = await Games.findOne({email: email});
-        console.log(gameDetail)
+        // console.log(gameDetail)
         return NextResponse.json({success:true, data: gameDetail}) 
     }catch(err) {
         return NextResponse.json({success:false, err: err})

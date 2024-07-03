@@ -111,3 +111,11 @@
   flex: 2;
   
 }
+.customToast{
+
+  background-color: unset;
+}
+.customToastBody{
+background-color: unset;
+
+}

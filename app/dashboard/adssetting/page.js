@@ -1,6 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import style from "../dashboard.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Page = () => {
   const selectOptions = [
     { value: "on", label: "On", key: 1 },
@@ -58,7 +61,7 @@ const Page = () => {
   };
 
   const [adsSetting, setAdsSetting] = useState(initialState);
-  const [label, setLabel] = useState('');
+  const [label, setLabel] = useState("");
   const [fields, setFields] = useState([]);
   const [oldData, setOldData] = useState("");
 
@@ -69,52 +72,88 @@ const Page = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(adsSetting),
     });
+    const response = await res.json()
+    if(response.success) {
+      toast.success('You are successfully changed the setting', {
+position: "bottom-left",
+autoClose: 2000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "dark",
+});
+    }
+    else {
+      toast.error('Something went wrong!', {
+position: "bottom-left",
+autoClose: 2000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "dark",
+});
+    }
   };
 
   const handleAddField = () => {
     if (label) {
       setAdsSetting({
         ...adsSetting,
-        [label]: '' // Initialize the newly added field with an empty string
+        [label]: "", // Initialize the newly added field with an empty string
       });
       setFields([...fields, label]);
-      setLabel('');
+      setLabel("");
     }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if(name=="label"){
-
+    if (name == "label") {
       setLabel(value);
     }
     setAdsSetting({
       ...adsSetting,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleRemoveField = (field) => {
     const { [field]: omit, ...rest } = adsSetting;
     setAdsSetting(rest);
-    setFields(fields.filter(item => item !== field));
+    setFields(fields.filter((item) => item !== field));
   };
 
-  useEffect(()=>{
-    fetchOldData()
-  },[])
+  useEffect(() => {
+    fetchOldData();
+  }, []);
 
-  const fetchOldData =async ()=>{
-    const res = await fetch ("/api/getadssetting")
-    const response = await res.json()
-    setAdsSetting(response.data[0])
-  }
+  const fetchOldData = async () => {
+    const res = await fetch("/api/getadssetting");
+    const response = await res.json();
+    setAdsSetting(response.data[0]);
+  };
 
   return (
     <div className={`${style.contentContainer}`}>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div className=" my-7 mx-7 text-xl">Home/dashboard/ads setting</div>
       <div className="flex mx-8 my-3">
-      <div className=" flex">
+        <div className=" flex">
           <input
             type="text"
             id="dynamic-field-label"
@@ -124,19 +163,23 @@ const Page = () => {
             placeholder="Enter field label"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
-          <button type="button" onClick={handleAddField} className="bg-blue-800 rounded-lg mx-2 w-[250px]">
+          <button
+            type="button"
+            onClick={handleAddField}
+            className="bg-blue-800 rounded-lg mx-2 w-[250px]"
+          >
             Add Field
           </button>
-          </div>
         </div>
-        
+      </div>
+
       <div className="flex flex-col mx-2  items-center">
         <div className="w-1/2">
           <div className="mt-4">
             <label>Set ads On/Off</label>
             <select
               name="adsonoff"
-              value={adsSetting.adsonoff}
+              value={adsSetting?.adsonoff}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
@@ -155,7 +198,7 @@ const Page = () => {
             <input
               type="text"
               name="popup"
-              value={adsSetting.popup}
+              value={adsSetting?.popup}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -165,7 +208,7 @@ const Page = () => {
             <input
               type="text"
               name="interstitial_count"
-              value={adsSetting.interstitial_count}
+              value={adsSetting?.interstitial_count}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -175,7 +218,7 @@ const Page = () => {
             <input
               type="text"
               name="interstitial_tag"
-              value={adsSetting.interstitial_tag}
+              value={adsSetting?.interstitial_tag}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -185,7 +228,7 @@ const Page = () => {
             <input
               type="text"
               name="appOpen_tag"
-              value={adsSetting.appOpen_tag}
+              value={adsSetting?.appOpen_tag}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -195,7 +238,7 @@ const Page = () => {
             <input
               type="text"
               name="rewarded_tag"
-              value={adsSetting.rewarded_tag}
+              value={adsSetting?.rewarded_tag}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -205,7 +248,7 @@ const Page = () => {
             <input
               type="text"
               name="native_top_tag"
-              value={adsSetting.native_top_tag}
+              value={adsSetting?.native_top_tag}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -215,7 +258,7 @@ const Page = () => {
             <input
               type="text"
               name="native_bottom_tag"
-              value={adsSetting.native_bottom_tag}
+              value={adsSetting?.native_bottom_tag}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -225,7 +268,7 @@ const Page = () => {
             <input
               type="text"
               name="banner_type_tag"
-              value={adsSetting.banner_type_tag}
+              value={adsSetting?.banner_type_tag}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -235,7 +278,7 @@ const Page = () => {
             <input
               type="text"
               name="top_type"
-              value={adsSetting.top_type}
+              value={adsSetting?.top_type}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -245,7 +288,7 @@ const Page = () => {
             <input
               type="text"
               name="bottom_type"
-              value={adsSetting.bottom_type}
+              value={adsSetting?.bottom_type}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -255,7 +298,7 @@ const Page = () => {
             <input
               type="text"
               name="native_btn_type"
-              value={adsSetting.native_btn_type}
+              value={adsSetting?.native_btn_type}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -265,7 +308,7 @@ const Page = () => {
             <input
               type="text"
               name="start_ads"
-              value={adsSetting.start_ads}
+              value={adsSetting?.start_ads}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -275,7 +318,7 @@ const Page = () => {
             <input
               type="text"
               name="Version_Code"
-              value={adsSetting.Version_Code}
+              value={adsSetting?.Version_Code}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -285,7 +328,7 @@ const Page = () => {
             <input
               type="text"
               name="update_link"
-              value={adsSetting.update_link}
+              value={adsSetting?.update_link}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -295,7 +338,7 @@ const Page = () => {
             <input
               type="text"
               name="start_time"
-              value={adsSetting.start_time}
+              value={adsSetting?.start_time}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -305,7 +348,7 @@ const Page = () => {
             <input
               type="text"
               name="back_btn_interstitial"
-              value={adsSetting.back_btn_interstitial}
+              value={adsSetting?.back_btn_interstitial}
               onChange={handleChange}
               placeholder="true/false"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -316,7 +359,7 @@ const Page = () => {
             <input
               type="text"
               name="second_btn_opan_ads"
-              value={adsSetting.second_btn_opan_ads}
+              value={adsSetting?.second_btn_opan_ads}
               onChange={handleChange}
               placeholder="true/false"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -327,7 +370,7 @@ const Page = () => {
             <input
               type="text"
               name="native_top_show"
-              value={adsSetting.native_top_show}
+              value={adsSetting?.native_top_show}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -337,7 +380,7 @@ const Page = () => {
             <input
               type="text"
               name="native_bottom_show"
-              value={adsSetting.native_bottom_show}
+              value={adsSetting?.native_bottom_show}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -347,7 +390,7 @@ const Page = () => {
             <input
               type="text"
               name="interstitial_preload"
-              value={adsSetting.interstitial_preload}
+              value={adsSetting?.interstitial_preload}
               onChange={handleChange}
               placeholder="true/false"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -358,7 +401,7 @@ const Page = () => {
             <input
               type="text"
               name="native_preload"
-              value={adsSetting.native_preload}
+              value={adsSetting?.native_preload}
               onChange={handleChange}
               placeholder="true/false"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -369,7 +412,7 @@ const Page = () => {
             <input
               type="text"
               name="admob_banner"
-              value={adsSetting.admob_banner}
+              value={adsSetting?.admob_banner}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -379,7 +422,7 @@ const Page = () => {
             <input
               type="text"
               name="admob_interstitial"
-              value={adsSetting.admob_interstitial}
+              value={adsSetting?.admob_interstitial}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -389,7 +432,7 @@ const Page = () => {
             <input
               type="text"
               name="admob_open"
-              value={adsSetting.admob_open}
+              value={adsSetting?.admob_open}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -399,7 +442,7 @@ const Page = () => {
             <input
               type="text"
               name="admob_native_first"
-              value={adsSetting.admob_native_first}
+              value={adsSetting?.admob_native_first}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -409,7 +452,7 @@ const Page = () => {
             <input
               type="text"
               name="admob_native_second"
-              value={adsSetting.admob_native_second}
+              value={adsSetting?.admob_native_second}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -419,7 +462,7 @@ const Page = () => {
             <input
               type="text"
               name="admob_rewarded"
-              value={adsSetting.admob_rewarded}
+              value={adsSetting?.admob_rewarded}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -429,7 +472,7 @@ const Page = () => {
             <input
               type="text"
               name="facebok_banner"
-              value={adsSetting.facebok_banner}
+              value={adsSetting?.facebok_banner}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -439,7 +482,7 @@ const Page = () => {
             <input
               type="text"
               name="facebok_native_first"
-              value={adsSetting.facebok_native_first}
+              value={adsSetting?.facebok_native_first}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -449,7 +492,7 @@ const Page = () => {
             <input
               type="text"
               name="facebok_native_second"
-              value={adsSetting.facebok_native_second}
+              value={adsSetting?.facebok_native_second}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -459,7 +502,7 @@ const Page = () => {
             <input
               type="text"
               name="facebok_interstitial"
-              value={adsSetting.facebok_interstitial}
+              value={adsSetting?.facebok_interstitial}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -469,7 +512,7 @@ const Page = () => {
             <input
               type="text"
               name="facebok_open"
-              value={adsSetting.facebok_open}
+              value={adsSetting?.facebok_open}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -479,7 +522,7 @@ const Page = () => {
             <input
               type="text"
               name="facebok_rewarded"
-              value={adsSetting.facebok_rewarded}
+              value={adsSetting?.facebok_rewarded}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -489,7 +532,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_1_background"
-              value={adsSetting.btn_1_background}
+              value={adsSetting?.btn_1_background}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -499,7 +542,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_1_text"
-              value={adsSetting.btn_1_text}
+              value={adsSetting?.btn_1_text}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -509,7 +552,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_color_start"
-              value={adsSetting.btn_color_start}
+              value={adsSetting?.btn_color_start}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -519,7 +562,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_color_end"
-              value={adsSetting.btn_color_end}
+              value={adsSetting?.btn_color_end}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -529,7 +572,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_color_border_start"
-              value={adsSetting.btn_color_border_start}
+              value={adsSetting?.btn_color_border_start}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -539,7 +582,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_color_border_end"
-              value={adsSetting.btn_color_border_end}
+              value={adsSetting?.btn_color_border_end}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -549,7 +592,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_color_gradiant_angle"
-              value={adsSetting.btn_color_gradiant_angle}
+              value={adsSetting?.btn_color_gradiant_angle}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -559,7 +602,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_color_gradiant_border_angle"
-              value={adsSetting.btn_color_gradiant_border_angle}
+              value={adsSetting?.btn_color_gradiant_border_angle}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -569,7 +612,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_color_text"
-              value={adsSetting.btn_color_text}
+              value={adsSetting?.btn_color_text}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -579,7 +622,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_border_height"
-              value={adsSetting.btn_border_height}
+              value={adsSetting?.btn_border_height}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -589,7 +632,7 @@ const Page = () => {
             <input
               type="text"
               name="btn_height"
-              value={adsSetting.btn_height}
+              value={adsSetting?.btn_height}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -599,29 +642,34 @@ const Page = () => {
             <input
               type="text"
               name="btn_radius"
-              value={adsSetting.btn_radius}
+              value={adsSetting?.btn_radius}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
           <form onSubmit={handleSubmit}>
-        {fields.map((field, index) => (
-          <div key={index} className="form-group mt-4">
-            <label htmlFor={field}>{field}</label>
-            <div className="flex ">
-            <input
-              type="text"
-              id={field}
-              name={field}
-              value={adsSetting[field]}
-              onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-            <button type="button" onClick={() => handleRemoveField(field)}>Remove</button>
-            </div>
-          </div>
-        ))}
-      </form>
+            {fields.map((field, index) => (
+              <div key={index} className="form-group mt-4">
+                <label htmlFor={field}>{field}</label>
+                <div className="flex ">
+                  <input
+                    type="text"
+                    id={field}
+                    name={field}
+                    value={adsSetting[field]}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveField(field)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </form>
 
           <button
             onClick={handleSubmit}
