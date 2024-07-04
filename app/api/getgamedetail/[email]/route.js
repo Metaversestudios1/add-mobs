@@ -2,15 +2,12 @@ import connectDb from "@/connection/mongoose";
 import Games from "@/models/Games";
 import { NextResponse } from "next/server";
 
-export const GET = async (req) => {
+export const GET = async (req, {params}) => {
   console.log("Connecting to the database...");
   await connectDb();
   console.log("Database connected.");
-
   try {
-    const { search } = new URL(req.url);
-    const email = search.split("?")[1];
-    console.log("Email parsed:", email);
+    const email = params.email
 
     const gameDetail = await Games.findOne({ email: email });
     console.log("Game detail retrieved:", gameDetail);

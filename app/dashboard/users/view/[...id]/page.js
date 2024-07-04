@@ -54,8 +54,9 @@ const Page = ({ params }) => {
   };
   const fetchGameDetail = async () => {
     try {
-      const res = await fetch(`/api/getgamedetail?${email}`);
+      const res = await fetch(`/api/getgamedetail/${email}`);
       const response = await res.json();
+      console.log(response)
       setGameDetail(response.data);
     } catch (err) {
       console.log("something happen" + err);
