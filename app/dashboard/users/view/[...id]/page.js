@@ -56,7 +56,6 @@ const Page = ({ params }) => {
     try {
       const res = await fetch(`/api/getgamedetail/${email}`);
       const response = await res.json();
-      console.log(response)
       setGameDetail(response.data);
     } catch (err) {
       console.log("something happen" + err);
@@ -64,7 +63,7 @@ const Page = ({ params }) => {
   };
   return (
     <>
-      {userDetail ? (
+      {gameDetail ? (
         <div className={` ${style.contentContainer}`} >
         <Link href="/dashboard/users" className="text-5xl">
         <IoIosArrowRoundBack />

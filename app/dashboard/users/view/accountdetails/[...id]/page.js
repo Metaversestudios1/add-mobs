@@ -6,7 +6,6 @@ const Page = ({ params }) => {
 
   const [bank, setBank] = useState([]);
   const [email, setEmail] = useState("");
-  console.log(email);
 
   useEffect(() => {
     const getData = async () => {
@@ -35,12 +34,11 @@ const Page = ({ params }) => {
     }
   };
   const fetchAccDetails = async () => {
-    const response = await fetch(`/api/getbankdetails?${email}`, {
+    const response = await fetch(`/api/getbankdetails/${email}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
     const detail = await response.json();
-    console.log(detail.details)
     setBank(detail.details);
   };
   return (
