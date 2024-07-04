@@ -64,7 +64,7 @@ const Page = ({ params }) => {
   return (
     <>
       {userDetail ? (
-        <div className="bg-gray-900 rounded-lg mt-5">
+        <div className={` ${style.contentContainer}`} >
         <Link href="/dashboard/users" className="text-5xl">
         <IoIosArrowRoundBack />
       </Link>
@@ -127,6 +127,19 @@ const Page = ({ params }) => {
             </div>
           </div>
           <div className="flex justify-end">
+          <Link
+                          href={{
+                            pathname: `/dashboard/users/view/accountdetails/[id]`,
+                            query: {
+                              id: param,
+                            },
+                          }}
+                          as={`/dashboard/users/view/accountdetails/${param}`}
+                        >
+          <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
+            Account details
+          </button>
+        </Link>
           <Link href={`/dashboard/users/view/scores`}>
           <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
             Scores

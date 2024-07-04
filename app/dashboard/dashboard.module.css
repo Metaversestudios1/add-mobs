@@ -14,21 +14,20 @@
 
 .sidebar {
   margin-top: 8px;
-  background-color: rgb(17 24 39)
+  background-color: rgb(17 24 39);
   /* Adjust the width as needed */
 }
 
 .main {
   width: 100%;
-   /* Add padding if necessary */
+  /* Add padding if necessary */
 }
 
 .footer {
   width: 100%;
   text-align: center; /* Center align the footer content */
-   /* Add padding if necessary */
+  /* Add padding if necessary */
 }
-
 
 /* @media (max-width: 768px) {
   .container {
@@ -44,7 +43,7 @@
 
   .content {
     height: calc(100vh - 50px); /* Adjust height considering the Navbar height */
-  /* }
+/* }
 } */
 /* @media (max-width: 639px) {
   .sidebar {
@@ -94,13 +93,12 @@
   margin-top: 8px;
   margin-left: 8px;
   background-color: rgb(17 24 39);
-  }
-  
-  
-  .addContainer {
-    margin-left: 8px;
-    margin-top: 8px;
-    padding: 10px 20px;
+}
+
+.addContainer {
+  margin-left: 8px;
+  margin-top: 8px;
+  padding: 10px 20px;
   background-color: rgb(17 24 39);
 }
 .imageContainer {
@@ -112,18 +110,15 @@
   background-color: rgb(17 24 39);
   display: flex;
 }
-.detailImage{
-  flex:1
+.detailImage {
+  flex: 1;
 }
-.userDetail{
+.userDetail {
   flex: 2;
-  
 }
-.customToast{
-
+.customToast {
   background-color: unset;
 }
-.customToastBody{
-background-color: unset;
-
+.customToastBody {
+  background-color: unset;
 }

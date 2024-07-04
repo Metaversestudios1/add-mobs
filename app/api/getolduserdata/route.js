@@ -5,7 +5,6 @@ import { NextResponse } from "next/server"
 export const POST = async(req)=>{  
     await connectDb()
     const {param} = await req.json()
-    console.log(param)
     try {
         const userdata = await SubUser.find({_id: param});
         return NextResponse.json({data: userdata})

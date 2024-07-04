@@ -14,7 +14,11 @@ export const GET = async (req) => {
       .skip((page - 1) * limit) // Skip records based on page number
       .limit(limit);
     const count = await AdminUsers.find().countDocuments()
-    return NextResponse.json({ data: adminUsers, count: count });
+    if(!adminUsers) {
+
+      return NextResponse.json({ success: false, message: "user not found" });
+    }
+    return NextResponse.json({ data: adminUsers, count: count , success: true});
   } catch (err) {
     return NextResponse.json({ err: err });
   }

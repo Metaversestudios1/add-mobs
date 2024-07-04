@@ -20,7 +20,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [currentPage, usersPerPage, users]);
+  }, [currentPage, usersPerPage]);
 
   const fetchUserData = async () => {
     try {
@@ -36,8 +36,11 @@ const Page = () => {
         setUsers(data.data);
         setAllUsers(data.data);
         setBlock(data.data[0].is_blocked);
-      } else {
-        console.error("Empty or malformed data received:", data);
+      } else if(!data.success) {
+        setUsers([false])
+      }
+      else{
+      console.error("Empty or malformed data received:", data);
       }
     } catch (error) {
       console.error("Fetch error:", error);
@@ -56,7 +59,8 @@ const Page = () => {
     });
     const res = await response.json();
     if (res.success) {
-      setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
+      // setUsers((prevUsers) => prevUsers.filter((user) => user.email !== email));
+      fetchUserData()
     } else {
       alert(res.error || "Failed to delete user");
     }
@@ -100,6 +104,47 @@ const Page = () => {
 
   // console.log(currentPage);
   const startIndex = (currentPage - 1) * usersPerPage;
+  if(!users[0]) {
+    return (
+      <div className={`${style.contentContainer} ml-2 mt-2 p-4 min-h-96`}>
+      <div className="p-6 text-xl">Users</div>
+          <div>
+            <div className={style.searchContainer}>
+              <div className={`${style.search} flex items-center`}>
+                <input
+                  placeholder="Search "
+                  type="text"
+                  name="search"
+                  className={`${style.input} rounded-lg bg-black p-2 m-5`}
+                  value={search}
+                  onChange={handleChange}
+                />
+                <div className={`${style.searchButton} flex items-center`}>
+                  <button
+                    onClick={handleSearch}
+                    className="bg-blue-800 text-white p-2 my-5  text-sm rounded-lg"
+                  >
+                    Search
+                  </button>
+                  <IoReload
+                    onClick={handleReladData}
+                    className="cursor-pointer text-xl mx-5"
+                  />
+                </div>
+              </div>
+              <Link href="/dashboard/users/add">
+                <button className="bg-blue-800 text-white p-3 m-5 text-sm rounded-lg">
+                  Add New
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className="flex justify-center">
+          <div className="my-10 text-xl">There is no User found in the memory!</div>
+          </div>
+      </div>
+    )
+  }
   return (
     <>
       {users.length > 0 ? (

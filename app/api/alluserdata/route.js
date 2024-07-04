@@ -31,7 +31,9 @@ export const GET = async (req) => {
       .skip((page - 1) * limit) // Skip records based on page number
       .limit(limit); // Limit the number of records per page
     const count = await SubUser.find().countDocuments()
-    console.log(count)
+    if(!userdata){
+      return NextResponse.json({success: false, message: "user not found"})
+    }
     return NextResponse.json({ data: userdata, count:count });
   } catch (err) {
     return NextResponse.json({ err: err });

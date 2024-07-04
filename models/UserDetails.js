@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const UserDetailsSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, ref: "UserSignupDetails" },
-    
-  wallet_balance: { type: Number, default: 0 },
+
+    wallet_balance: { type: Number, default: 0 },
     // Withdrawal request details
     withdrawal_requests: [
       {
@@ -34,6 +34,16 @@ const UserDetailsSchema = new mongoose.Schema(
       update_native_ads: { type: Number },
       update_wallet_balance: { type: Number },
     },
+    account_details: [
+      {
+        bank_name: { type: String, required: true },
+        ac_holder_name: { type: String, required: true },
+        ac_number: { type: String, required: true },
+        ifsc_code: { type: String, required: true },
+        ac_type: { type: String },
+        upi_id: { type: String },
+      },
+    ],
   },
   { timestamps: true }
 );

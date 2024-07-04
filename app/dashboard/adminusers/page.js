@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoReload } from "react-icons/io5";
 import { IoEye } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
 
 const Page = () => {
   const [search, setSearch] = useState("");
@@ -16,15 +17,20 @@ const Page = () => {
 
   useEffect(() => {
     fetchUserData();
-  },[currentPage, usersPerPage, adminUsers]); // Only fetch users once on component mount
+  },[currentPage, usersPerPage]); // Only fetch users once on component mount
 
   const fetchUserData = async () => {
     const res = await fetch(`/api/getadminusers?page=${currentPage}&limit=${usersPerPage}`);
     const data = await res.json();
-    
-    setTotalAdminUsers(data.count);
-    setAdminUsers(data.data);
-    setAllUsers(data.data);
+    if(data.success) {
+
+      setTotalAdminUsers(data.count);
+      setAdminUsers(data.data);
+      setAllUsers(data.data);
+    }
+    else {
+      setAdminUsers([false])
+    }
   };
 
   const handleChange = (e) => {
@@ -39,9 +45,7 @@ const Page = () => {
     });
     const res = await response.json(); // Await the response correctly
     if (res.success) {
-      setAdminUsers((prevUsers) =>
-        prevUsers.filter((user) => user.email !== email)
-      );
+      fetchUserData()
     } else {
       alert(res.error || "Failed to delete user");
     }
@@ -66,7 +70,47 @@ const Page = () => {
     setAdminUsers(allUsers);
   };
   const startIndex = (currentPage - 1) * usersPerPage;
-
+  if(!adminUsers[0]) {
+    return (
+      <div className={`${style.contentContainer} ml-2 mt-2 p-4 min-h-96`}>
+      <div className="p-6 text-xl">Sub Admin</div>
+          <div>
+            <div className={style.searchContainer}>
+              <div className={`${style.search} flex items-center`}>
+                <input
+                  placeholder="Search "
+                  type="text"
+                  name="search"
+                  className={`${style.input} rounded-lg bg-black p-2 m-5`}
+                  value={search}
+                  onChange={handleChange}
+                />
+                <div className={`${style.searchButton} flex items-center`}>
+                  <button
+                    onClick={handleSearch}
+                    className="bg-blue-800 text-white p-2 my-5  text-sm rounded-lg"
+                  >
+                    Search
+                  </button>
+                  <IoReload
+                    onClick={handleReladData}
+                    className="cursor-pointer text-xl mx-5"
+                  />
+                </div>
+              </div>
+              <Link href="/dashboard/adminusers/add">
+                <button className="bg-blue-800 text-white p-3 m-5 text-sm rounded-lg">
+                  Add New
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className="flex justify-center">
+          <div className="my-10 text-xl">There is no Sub Admins found in the memory!</div>
+          </div>
+      </div>
+    )
+  }
   return (
     <>
       {adminUsers.length > 0 ? (
@@ -160,12 +204,10 @@ const Page = () => {
                           >
                             <CiEdit className="text-2xl cursor-pointer mx-4" />
                           </Link>
-                          <button
-                            onClick={() => handleDelete(item.email)}
-                            className="px-4 py-3 bg-red-900 rounded-lg "
-                          >
-                            Delete
-                          </button>
+                          <MdDelete
+                          onClick={() => handleDelete(item.email)}
+                          className="text-2xl cursor-pointer"
+                        />
                         </td>
                       </tr>
                     );

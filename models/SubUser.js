@@ -10,7 +10,8 @@ const SubUserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   createdAt:{type:String, required: true},
   wallet_balance: { type: Number, default: 0 },
-  is_blocked: { type: Boolean, default: false }
+  is_blocked: { type: Boolean, default: false },
+  
 });
 mongoose.models = {};
 export default mongoose.model('SubUser', SubUserSchema);

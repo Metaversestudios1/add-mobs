@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import style from "@/app/dashboard/dashboard.module.css";
 
 
 const Page = () => {
@@ -44,7 +45,7 @@ const Page = () => {
   });
 
   return (
-    <div className="bg-gray-900 rounded-lg mt-5">
+    <div className={` ${style.contentContainer}`} >
     <IoIosArrowRoundBack className="text-5xl cursor-pointer" onClick={goBack}/>
 
       <h2 className="ml-10 text-2xl my-5">Withdraw Requests</h2>
@@ -80,19 +81,7 @@ const Page = () => {
                 Account Holder Name
               </th>
               <th scope="col" className="px-6 py-3">
-                Bank Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Bank Account
-              </th>
-              <th scope="col" className="px-6 py-3">
-                IFSC Code
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Withdraw Amount
-              </th>
-              <th scope="col" className="px-6 py-3">
-                UPI ID (optional)
               </th>
               <th scope="col" className="px-6 py-3">
                 Date
@@ -108,11 +97,7 @@ const Page = () => {
                 >
                   {row.name}
                 </th>
-                <td className="px-6 py-4">{row.bankName}</td>
-                <td className="px-6 py-4">{row.bankAccount}</td>
-                <td className="px-6 py-4">{row.ifseCode}</td>
                 <td className="px-6 py-4">{row.amount}</td>
-                <td className="px-6 py-4">{row.upi}</td>
                 <td className="px-6 py-4">{row.date}</td>
               </tr>
             ))}

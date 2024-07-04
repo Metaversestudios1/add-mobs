@@ -11,6 +11,8 @@ const Page = () => {
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleChange = (e) => {
     if (e.target.name == "name") {
       setName(e.target.value);
@@ -22,8 +24,22 @@ const Page = () => {
       setPassword(e.target.value);
     }
   };
+
+  const validatePhoneNumber = (number) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(number);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validatePhoneNumber(contact)) {
+      setErrorMessage('Please enter a valid Phone Number.');
+      return;
+    } else {
+      setErrorMessage('');
+      // Submit the form or handle the valid input
+      console.log('Phone number is valid:', contact);
+    }
     const data = { name, email, contact, password };
     const res = await fetch("/api/subuser", {
       method: "POST",
@@ -122,6 +138,11 @@ const Page = () => {
               onChange={handleChange}
             />
           </div>
+          {errorMessage && (
+            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+              {errorMessage}
+            </p>
+          )}
           
         </div>
         

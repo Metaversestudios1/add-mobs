@@ -34,7 +34,7 @@ const Page =  () => {
             </div>
 
             <Link
-              href=""
+              href="/dashboard/users"
               className="text-[#f84525] font-medium text-sm hover:text-red-800"
             >
               View
@@ -102,19 +102,6 @@ const Page =  () => {
                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {userCount} 
                       </td>
-                      <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex items-center">
-                          <span className="mr-2">70%</span>
-                          <div className="relative w-full">
-                            <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
-                              <div
-                                style={{ width: "70%" }}
-                                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
                     </tr>
                     <tr className="text-gray-700 dark:text-gray-100">
                       <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
@@ -122,19 +109,6 @@ const Page =  () => {
                       </th>
                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {adminCount}
-                      </td>
-                      <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex items-center">
-                          <span className="mr-2">40%</span>
-                          <div className="relative w-full">
-                            <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
-                              <div
-                                style={{ width: "40%" }}
-                                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
                       </td>
                     </tr>
                   </tbody>

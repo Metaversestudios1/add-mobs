@@ -2,6 +2,8 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import style from "@/app/dashboard/dashboard.module.css";
+
 
 const Page = () => {
 const router = useRouter()
@@ -9,7 +11,7 @@ const router = useRouter()
     router.back()
   }
   return (
-        <div className="bg-gray-900 rounded-lg mt-5">
+        <div className={` ${style.contentContainer}`} >
         <IoIosArrowRoundBack className="text-5xl cursor-pointer" onClick={goBack}/>
           <h2 className="ml-10 text-2xl my-5">Ads Count</h2>
             <div class="relative overflow-x-auto m-10 mt-0 rounded-lg">

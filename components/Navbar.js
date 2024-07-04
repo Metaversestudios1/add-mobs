@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <nav>
       <div className={`${style.container} `}>
-      <h3>Admin Panel</h3>
+      <h3 className="w-[264px] text-xl border-r-8 border-black text-center">Admin Panel</h3>
         <div className="flex items-center">
           <IoMdNotifications className="text-2xl mx-6 cursor-pointer"/>
           <button onClick={() => signOut({ callbackUrl: "/" })} className="mr-4">log out</button>
