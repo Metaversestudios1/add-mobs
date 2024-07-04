@@ -15,7 +15,7 @@ const Page = () => {
 
   const [rows, setRows] = useState([
     {
-      name: "Pratham",
+      name: "happy",
       bankName: "Bank of India",
       bankAccount: "25143145",
       ifseCode: "BKID013120",
@@ -23,15 +23,6 @@ const Page = () => {
       upi: "95632@ybl",
       date: "2024-06-01"
     },
-    {
-      name: "Pratham",
-      bankName: "Bank of India",
-      bankAccount: "725143145",
-      ifseCode: "BKID013120",
-      amount: 1000,
-      upi: "95632@ybl",
-      date: "2024-06-15"
-    }
   ]);
 
   const filteredRows = rows.filter(row => {
