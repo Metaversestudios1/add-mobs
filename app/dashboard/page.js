@@ -116,7 +116,7 @@ const Page =  () => {
               </div>
             </div>
           </div>
-          <div className="bg-gray-800 border shadow-md shadow-black/5 p-6 rounded-md">
+          {/*<div className="bg-gray-800 border shadow-md shadow-black/5 p-6 rounded-md ">
             <div className="flex justify-between mb-4 items-start">
               <div className="font-medium">Activities</div>
               <div className="dropdown">
@@ -206,7 +206,7 @@ const Page =  () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div>*/}
         </div>
       </div>
     </div>

@@ -17,11 +17,7 @@ const GamesSchema = mongoose.Schema({
     flip_card: {
         flip_count:{type: Number},
         flip_bonus: {type: Number}
-    },
-    daily_bonus: {type: Number},
-    ads_bonus: {type: Number},
-    login_bonus: {type: Number},
-    max_withdraw_amt: {type: Number}
+    }
 })
 
 mongoose.models = {};
