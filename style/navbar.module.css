@@ -10,9 +10,8 @@
     padding: 20px;
     list-style: none;
 }
-
-@media (max-width: 639px) {
-  .container{
-    margin-top: 60px;
+@media (max-width: 930px) {
+  .container h3 {
+    margin-left: 40px;
   }
 }

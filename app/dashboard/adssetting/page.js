@@ -173,9 +173,9 @@ theme: "dark",
         </div>
       </div>
 
-      <div className="flex flex-col items-center">
-        <div className="flex">
-        <div className="mr-14 w-96">
+      <div className={` flex flex-col items-center `}>
+        <div className={`${style.adsSetting}  flex`}>
+        <div className={`${style.firstColumn} mr-14 w-96`}>
           <div className="mt-4">
             <label>Set ads On/Off</label>
             <select
@@ -418,31 +418,9 @@ theme: "dark",
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
-          <form onSubmit={handleSubmit}>
-            {fields.map((field, index) => (
-              <div key={index} className="form-group mt-4">
-                <label htmlFor={field}>{field}</label>
-                <div className="flex ">
-                  <input
-                    type="text"
-                    id={field}
-                    name={field}
-                    value={adsSetting[field]}
-                    onChange={handleChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveField(field)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-          </form>
+          
           </div>
-          <div className="ml-14 w-96">
+          <div className={`${style.secondColumn} ml-14 w-96`}>
           <div className="mt-4">
             <label>Admob Interstitial</label>
             <input
@@ -675,6 +653,29 @@ theme: "dark",
             />
           </div>
           </div>
+          <form onSubmit={handleSubmit}>
+            {fields.map((field, index) => (
+              <div key={index} className="form-group mt-4">
+                <label htmlFor={field}>{field}</label>
+                <div className="flex ">
+                  <input
+                    type="text"
+                    id={field}
+                    name={field}
+                    value={adsSetting[field]}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveField(field)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </form>
           
           </div>
           

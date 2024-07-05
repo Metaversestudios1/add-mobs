@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-
+import style from "./dashboard.module.css"
 
 
 const Page =  () => {
@@ -20,7 +20,7 @@ const Page =  () => {
   }
   return (
     <div>
-      <div className="p-6 ml-2 mt-2 bg-gray-900 ">
+      <div className={`${style.contentContainer} p-6 ml-2 mt-2 bg-gray-900`} >
       <div className=" m-2 mb-5 text-xl">Dashboard</div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           <div className="bg-gray-800 rounded-md border  p-6 shadow-md shadow-black/5">

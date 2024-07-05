@@ -282,20 +282,20 @@ const Page = () => {
               </table>
             </div>
           </div>
-          <div className="container flex justify-end">
-            <div className="text-lg">
+          <div className={`${style.pagination} container flex justify-end items-center pb-10`}>
+            <div className="text-sm">
               Showing {startIndex + 1} to{" "}
               {Math.min(startIndex + usersPerPage, totalUsers)} of {totalUsers}{" "}
               entries
             </div>
-            <div className="flex flex-row mx-10 mb-10">
+            <div className="flex flex-row mx-10 ">
               <button
                 type="button"
                 className="bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-red-700 hover:text-white px-3"
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage === 1}
               >
-                <div className="flex flex-row align-middle">
+                <div className="flex flex-row ">
                   <svg
                     className="w-5 mr-2"
                     fill="currentColor"

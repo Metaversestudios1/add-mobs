@@ -4,6 +4,7 @@ import Link from "next/link";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { MdOutlineAttachMoney } from "react-icons/md";
+import style from "../style/sidebar.module.css"
 
 const Sidebar = () => {
   const gameSetting = [
@@ -33,10 +34,10 @@ const Sidebar = () => {
   };
   console.log(sidebarOpen);
   return (
-    <div >
+    <div className="bg-gray-900 ">
     <button
     onClick={toggleSidebar}
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className={`${style.sidebarBtn} absolute top-1 inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600`}
   
   >
         <span className="sr-only">Open sidebar</span>
@@ -56,15 +57,12 @@ const Sidebar = () => {
       </button>
 
       <aside
-      className={` z-10 w-64 h-screen  bg-gray-50 dark:bg-gray-900 
-        ${!sidebarOpen && "translate-x-0"} transition-transform ${
-        sidebarOpen ? '-translate-x-full' : 'translate-x-0'
-      }`}
+      className={` ${style.aside} ${sidebarOpen?"max-[930px]::translate-x-full absolute z-50":"max-[930px]:-translate-x-full"} z-10 w-64 h-screen  bg-gray-50 dark:bg-gray-900 `}
       aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900 max-sm:mt-14">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900 ">
           <ul className="space-y-2 font-medium">
-            <li>
+            <li onClick={toggleSidebar}>
               <Link
                 href="/dashboard"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -83,7 +81,7 @@ const Sidebar = () => {
               </Link>
             </li>
             
-            <li>
+            <li onClick={toggleSidebar}>
               <Link
                 href="/dashboard/users"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -101,7 +99,7 @@ const Sidebar = () => {
               </Link>
             </li>
 
-            <li>
+            <li onClick={toggleSidebar}>
               <Link
                 href="/dashboard/adminusers"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -136,7 +134,7 @@ const Sidebar = () => {
             {gameSection && (
               <ul>
               {gameSetting.map((game, i)=>{
-                  return (<li key={i}>
+                  return (<li key={i} onClick={toggleSidebar}>
                     <Link
                       href={game.href}
                       className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -150,7 +148,7 @@ const Sidebar = () => {
                 
                 </ul>
               )}
-              <li>
+              <li onClick={toggleSidebar}>
               <Link href="/dashboard/adssetting">
                 <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
                   <IoSettingsOutline className="text-2xl" />
@@ -160,7 +158,7 @@ const Sidebar = () => {
                 </div>
               </Link>
               </li>
-              <li>
+              <li onClick={toggleSidebar}>
               <Link href= "/dashboard/setting/maxwithdraw">
                 <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer">
                   <MdOutlineAttachMoney className="text-2xl" />

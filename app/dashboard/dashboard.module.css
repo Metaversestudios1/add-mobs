@@ -10,88 +10,32 @@
 
 .content {
   display: flex;
+  flex: 1; /* Make content section flex to take remaining space */
 }
 
 .sidebar {
-  margin-top: 8px;
+  width: 250px; /* Initial width of sidebar */
+  flex: 0 0 250px; /* Sidebar doesn't grow or shrink */
+  /* Adjust margin and padding as needed */
   background-color: rgb(17 24 39);
-  /* Adjust the width as needed */
 }
 
 .main {
-  width: 100%;
-  /* Add padding if necessary */
+  flex: 1; /* Main content takes remaining space */
+  /* Add padding or adjust width as necessary */
 }
 
-.footer {
-  width: 100%;
-  text-align: center; /* Center align the footer content */
-  /* Add padding if necessary */
-}
 
-/* @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
 
-  .sidebar {
-    width: 100%;
-    height: auto;
-    order: 2;
-
-  }
-
-  .content {
-    height: calc(100vh - 50px); /* Adjust height considering the Navbar height */
-/* }
-} */
-/* @media (max-width: 639px) {
-  .sidebar {
-    position: fixed;
-    width: 100%;
-  }
-  .content {
-    order: 1;}
-
-}
-@media (max-width: 800px) {
-  .searchContainer{
-    flex-direction: column;
-  }
-}
-@media (min-width:640px) and ( max-width: 700px) {
-  .search{
-    flex-direction: column;
-    align-items: start;
-  }
-  .searchButton {
-    margin-left: 20px;
-  }
-  .input {
-    margin-bottom: 0;
-  }
-}
-
-@media (max-width: 420px) {
-  .search {
-    flex-direction: column;
-    align-items: start;
-  }
-  .searchButton {
-    margin-left: 20px;
-  }
-  .input {
-    margin-bottom: 0;
-  }
-} */
 
 .searchContainer {
   display: flex;
   justify-content: space-between;
 }
 .contentContainer {
-  margin-top: 8px;
   margin-left: 8px;
+  margin-top: 8px;
+
   background-color: rgb(17 24 39);
 }
 
@@ -121,4 +65,83 @@
 }
 .customToastBody {
   background-color: unset;
+}
+
+
+
+/* Media Queries for responsiveness */
+
+@media (max-width: 930px) {
+  .content {
+    flex-direction: column; /* Stack sidebar on top of main content on smaller screens */
+  }
+  
+  .sidebar {
+    width: 0px;
+    /* Full width sidebar on smaller screens */
+    flex: 0 0 auto; /*Allow sidebar to shrink or grow as needed*/
+    /* Adjust other styles as necessary */
+  }
+  
+  .main {
+    position: absolute;
+    width: 100%; /* Full width main content on smaller screens */
+    /* Adjust other styles as necessary */
+    
+  }
+  .contentContainer{
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 510px) {
+  .searchContainer{
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 400px) { 
+  .search {
+    flex-direction: column;
+    align-items: start;
+  }
+  .searchButton {
+    margin-left: 20px;
+  }
+  .input{
+    margin-bottom: 5px;
+  }
+  .pagination {
+    margin: 10px 15px;
+  }
+}
+
+@media (max-width: 1200px) { 
+  .adsSetting {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .firstColumn {
+    margin-right: 0;
+    margin-left: 110px;
+  }
+  .secondColumn {
+    margin-left: 0;
+    margin-left: 110px;
+  }
+  .firstColumn input {
+    width: 70%;
+  }
+  .secondColumn select{
+    width: 70%;
+
+  }
+  .secondColumn input {
+    width: 70%;
+  }
+  .firstColumn select{
+    width: 70%;
+
+  }
 }

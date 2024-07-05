@@ -53,16 +53,18 @@ export const POST = async (req) => {
       },
 
       lucky_slot: {
-        lucky_count: 5,
+        lucky_count: 5, 
         slot_bonus: 1000
       },
 
       scratch_card: {
         card_count: 5,
+        card_bonus:1000
       },
 
       flip_card: {
         flip_count: 5,
+        flip_bonus:1000
       },
       daily_bonus: 1000,
       ads_bonus: 1000,

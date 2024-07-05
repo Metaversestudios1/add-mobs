@@ -16,11 +16,11 @@ export default function DashboardLayout({ children }) {
         </div>
         <div className={style.main}>
           {children}
+          <Footer />
         </div>
       </div>
-      <div className={style.footer}>
-        <Footer />
-      </div>
+      {/*<div className={style.footer}>
+      </div>*/}
     </div>
   );
 }

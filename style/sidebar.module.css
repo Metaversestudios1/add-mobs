@@ -1,0 +1,10 @@
+/* @media (max-width: 930px) {
+  .aside {
+    transform: translateX(-100%);
+  }
+} */
+@media (min-width: 930px) {
+    .sidebarBtn {
+        visibility: hidden;
+    }
+}
