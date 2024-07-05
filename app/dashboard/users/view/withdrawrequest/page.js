@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import style from "@/app/dashboard/dashboard.module.css";
+import { FcApprove } from "react-icons/fc";
+import { FcDisapprove  } from "react-icons/fc";
 
 
 const Page = () => {
@@ -68,6 +70,9 @@ const Page = () => {
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+            <th scope="col" className="px-6 py-3">
+              Date
+            </th>
               <th scope="col" className="px-6 py-3">
                 Account Holder Name
               </th>
@@ -75,7 +80,7 @@ const Page = () => {
                 Withdraw Amount
               </th>
               <th scope="col" className="px-6 py-3">
-                Date
+                Action
               </th>
             </tr>
           </thead>
@@ -86,10 +91,11 @@ const Page = () => {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {row.name}
+                  {row.date}
                 </th>
+                <td className="px-6 py-4">{row.name}</td>
                 <td className="px-6 py-4">{row.amount}</td>
-                <td className="px-6 py-4">{row.date}</td>
+                <td className="px-6 py-4 flex"><FcApprove className="text-2xl cursor-pointer" /><FcDisapprove className="text-2xl cursor-pointer"/></td>
               </tr>
             ))}
           </tbody>

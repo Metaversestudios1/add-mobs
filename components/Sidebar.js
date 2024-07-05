@@ -57,7 +57,7 @@ const Sidebar = () => {
       </button>
 
       <aside
-      className={` ${style.aside} ${sidebarOpen?"max-[930px]::translate-x-full absolute z-50":"max-[930px]:-translate-x-full"} z-10 w-64 h-screen  bg-gray-50 dark:bg-gray-900 `}
+      className={` ${style.aside} ${sidebarOpen?"max-[930px]::translate-x-full absolute z-50":"max-[930px]:-translate-x-full"} z-10 w-[250px]  bg-gray-50 dark:bg-gray-900 `}
       aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900 ">
