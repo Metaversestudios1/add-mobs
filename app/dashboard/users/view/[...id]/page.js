@@ -82,11 +82,11 @@ const Page = ({ params }) => {
             </div>
             <div className={`${style.userDetail}`}>
               <div className="flex justify-between">
-                <p className="text-center text-2xl my-5 underline">
+                <p className="text-center text-2xl my-5 underline ml-6">
                   User Detail
                 </p>
               </div>
-              <div className="flex">
+              <div className="flex flex-wrap">
                 <div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Email:</div>
@@ -126,7 +126,7 @@ const Page = ({ params }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end flex-wrap">
           <Link
                           href={{
                             pathname: `/dashboard/users/view/accountdetails/[id]`,
