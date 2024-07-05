@@ -45,33 +45,33 @@ export const POST = async (req) => {
     });
 
     await userDetails.save();
-    const updateGameDetail = new Games({
-      email: newUser.email,
-      spin_wheel: {
-        spin_count: 5,
-        spin_bonus:1000
-      },
+    // const updateGameDetail = new Games({
+    //   email: newUser.email,
+    //   spin_wheel: {
+    //     spin_count: 5,
+    //     spin_bonus:1000
+    //   },
 
-      lucky_slot: {
-        lucky_count: 5, 
-        slot_bonus: 1000
-      },
+    //   lucky_slot: {
+    //     lucky_count: 5, 
+    //     slot_bonus: 1000
+    //   },
 
-      scratch_card: {
-        card_count: 5,
-        card_bonus:1000
-      },
+    //   scratch_card: {
+    //     card_count: 5,
+    //     card_bonus:1000
+    //   },
 
-      flip_card: {
-        flip_count: 5,
-        flip_bonus:1000
-      },
-      daily_bonus: 1000,
-      ads_bonus: 1000,
-      login_bonus: 1000,
-      max_wihdraw_amt: 100000,
-    });
-    await updateGameDetail.save();
+    //   flip_card: {
+    //     flip_count: 5,
+    //     flip_bonus:1000
+    //   },
+    //   daily_bonus: 1000,
+    //   ads_bonus: 1000,
+    //   login_bonus: 1000,
+    //   max_wihdraw_amt: 100000,
+    // });
+    // await updateGameDetail.save();
     return NextResponse.json({ success: "success" });
   } catch (err) {
     return NextResponse.json({ err: err });

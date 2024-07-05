@@ -1,5 +1,5 @@
 import connectDb from "@/connection/mongoose";
-import Games from "@/models/Games";
+import GlobalGameStats from "@/models/GlobalGameStats";
 import { NextResponse } from "next/server";
 
 export const PUT = async (req) => {
@@ -14,9 +14,10 @@ export const PUT = async (req) => {
     flipCount,
     flipBonus,
   } = await req.json();
+  console.log(wheelBonus, wheelCount)
   try {
     if (scratchBonus && scratchCount) {
-      await Games.updateMany(
+      await GlobalGameStats.updateOne(
         {},
         {
           $set: {
@@ -29,7 +30,7 @@ export const PUT = async (req) => {
       );
       return NextResponse.json({ success: true });
     } else if (wheelCount && wheelBonus) {
-      await Games.updateMany(
+      await GlobalGameStats.updateOne(
         {},
         {
           $set: {
@@ -42,7 +43,7 @@ export const PUT = async (req) => {
       );
       return NextResponse.json({ success: true });
     } else if (slotCount && slotBonus) {
-      await Games.updateMany(
+      await GlobalGameStats.updateOne(
         {},
         {
           $set: {
@@ -55,7 +56,7 @@ export const PUT = async (req) => {
       );
       return NextResponse.json({ success: true });
     } else if (flipCount && flipBonus) {
-      await Games.updateMany(
+      await GlobalGameStats.updateOne(
         {},
         {
           $set: {
