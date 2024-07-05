@@ -1,10 +1,23 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../dashboard.module.css";
 
 const Page = () => {
     const [scratchCount, setScratchCount] = useState("")
     const [scratchBonus, setScratchBonus] = useState("")
+
+
+  
+    useEffect(()=>{
+      fetchOldDetail()
+    },[])
+    const fetchOldDetail = async ()=>{
+      const res = await fetch ("/api/getglobalstats")
+      const response = await res.json()
+      setScratchCount(response.data[0].scratch_card.card_count)
+      setScratchBonus(response.data[0].scratch_card.card_bonus)
+    
+    }
 
     const handleSubmit = async(e) =>{
         e.preventDefault()

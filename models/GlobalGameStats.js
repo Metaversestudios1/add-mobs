@@ -20,6 +20,7 @@ const GlobalGameStatsSchema = mongoose.Schema({
     daily_bonus: {type: Number, default:500},
     ads_bonus: {type: Number, default:1500},
     login_bonus: {type: Number, default:2000},
+    max_withdraw_amt: {type: Number, default: 100000}
 })
 
 mongoose.models = {};

@@ -1,11 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../dashboard.module.css";
 
 const Page = () => {
   const [flipCount, setFlipCount] = useState("");
   const [flipBonus, setFlipBonus] = useState("");
 
+  useEffect(()=>{
+    fetchOldDetail()
+  },[])
+  const fetchOldDetail = async ()=>{
+    const res = await fetch ("/api/getglobalstats")
+    const response = await res.json()
+    setFlipCount(response.data[0].flip_card.flip_count)
+    setFlipBonus(response.data[0].flip_card.flip_bonus)
+  
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { flipCount, flipBonus };

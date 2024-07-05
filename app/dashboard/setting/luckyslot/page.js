@@ -1,10 +1,21 @@
 "use client"
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import style from "../../dashboard.module.css";
 
 const Page = () => {
     const [slotCount, setSlotCount] = useState("")
     const [slotBonus, setSlotBonus] = useState("")
+
+    useEffect(()=>{
+      fetchOldDetail()
+    },[])
+    const fetchOldDetail = async ()=>{
+      const res = await fetch ("/api/getglobalstats")
+      const response = await res.json()
+      setSlotCount(response.data[0].lucky_slot.lucky_count)
+      setSlotBonus(response.data[0].lucky_slot.slot_bonus)
+    
+    }
 
   const handleSubmit = async(e) =>{
         e.preventDefault()

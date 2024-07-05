@@ -1,12 +1,20 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../dashboard.module.css";
 
 const Page = () => {
 
   const [wheelCount, setWheelCount] = useState("")
     const [wheelBonus, setWheelBonus] = useState("")
-
+useEffect(()=>{
+  fetchOldDetail()
+},[])
+const fetchOldDetail = async ()=>{
+  const res = await fetch ("/api/getglobalstats")
+  const response = await res.json()
+  setWheelCount(response.data[0].spin_wheel.spin_count)
+  setWheelBonus(response.data[0].spin_wheel.spin_bonus)
+}
   const handleSubmit = async(e) =>{
         e.preventDefault()
         const data = {wheelCount, wheelBonus}

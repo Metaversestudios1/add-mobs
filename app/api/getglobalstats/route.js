@@ -1,6 +1,5 @@
 import connectDb from "@/connection/mongoose"
 import GlobalGameStats from "@/models/GlobalGameStats"
-import SubUser from "@/models/SubUser"
 import { NextResponse } from "next/server"
 
 export const GET = async()=>{  
