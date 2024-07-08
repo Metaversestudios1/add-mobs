@@ -48,6 +48,8 @@ const AdsSchema = mongoose.Schema({
   btn_height: { type: String },
   btn_radius: { type: String },
   qureka_link: { type: String },
+  interstitial_ad_cost:{type: String},
+  native_ad_cost:{type: String}
   
 },{ strict: false });
 

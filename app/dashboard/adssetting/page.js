@@ -58,6 +58,8 @@ const Page = () => {
     btn_height: "",
     btn_radius: "",
     qureka_link: "",
+    interstitial_ad_cost:"",
+    native_ad_cost:""
   };
 
   const [adsSetting, setAdsSetting] = useState(initialState);
@@ -428,6 +430,16 @@ theme: "dark",
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
+          <div className="mt-4">
+            <label>Interstitial ad cost</label>
+            <input
+              type="text"
+              name="interstitial_ad_cost"
+              value={adsSetting?.interstitial_ad_cost}
+              onChange={handleChange}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
           
           </div>
           <div className={`${style.secondColumn} ml-14 w-96`}>
@@ -662,7 +674,16 @@ theme: "dark",
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
-          
+          <div className="mt-4">
+          <label>Native ad cost</label>
+          <input
+            type="text"
+            name="native_ad_cost"
+            value={adsSetting?.native_ad_cost}
+            onChange={handleChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
           </div>
           <form onSubmit={handleSubmit}>
             {fields.map((field, index) => (
