@@ -87,7 +87,7 @@ const Page = ({ params }) => {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
-                {adsCount?.update_interstitial_ads}
+                1
               </th>
               <th
                 scope="row"
