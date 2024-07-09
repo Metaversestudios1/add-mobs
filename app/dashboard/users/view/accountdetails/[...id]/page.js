@@ -1,8 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import style from "../../../../dashboard.module.css";
+import { useRouter } from "next/navigation";
+import { IoIosArrowRoundBack } from "react-icons/io";
 const Page = ({ params }) => {
   const param = params.id[0];
+  const router = useRouter();
+  const goBack = () => {
+    router.back();
+  };
 
   const [bank, setBank] = useState([]);
   const [email, setEmail] = useState("");
@@ -43,6 +49,10 @@ const Page = ({ params }) => {
   };
   return (
     <div className={`${style.contentContainer}`}>
+    <IoIosArrowRoundBack
+        className="text-5xl cursor-pointer"
+        onClick={goBack}
+      />
       <div>
         <div className="pt-10 pl-10 text-xl">Account Details</div>
         <div className="pt-10 pl-10 text-xl">Bank detail</div>

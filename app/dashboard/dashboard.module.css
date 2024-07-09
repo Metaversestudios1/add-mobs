@@ -146,3 +146,16 @@
 
   }
 }
+
+@media (max-width: 570px) { 
+  .scoreFilterContainer{
+    display: block;
+  }
+  .filter {
+    margin-left:0;
+  }
+  .gameFilter {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}
