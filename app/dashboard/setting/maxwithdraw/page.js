@@ -4,23 +4,22 @@ import style from "../../dashboard.module.css";
 const Page = () => {
   const [maxWithdraw, setMaxWithdraw] = useState("");
 
-  useEffect(()=>{
+  useEffect(()=>{ 
     fetchOldDetail()
   },[])
   const fetchOldDetail = async ()=>{
     const res = await fetch ("/api/getglobalstats")
     const response = await res.json()
-    setMaxWithdraw(response.data[0].max_withdraw)
+    setMaxWithdraw(response.data[0].max_withdraw_amt)
   
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { maxWithdraw };
     const res = await fetch("/api/updategamedetail", {
       method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({maxWithdraw}),
     });
     const response = await res.json();
     if (response.success) {

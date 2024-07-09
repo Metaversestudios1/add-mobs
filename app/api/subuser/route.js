@@ -8,8 +8,7 @@ import Games from "@/models/Games";
 export const POST = async (req) => {
   await connectDb();
   try {
-    const { name, email, contact, password} =
-      await req.json();
+    const { name, email, contact, password } = await req.json();
     const date = new Date();
     const time =
       date.getDate() +
@@ -22,7 +21,6 @@ export const POST = async (req) => {
       ":" +
       date.getMinutes();
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(time)
     let subuser = new SubUser({
       name,
       email,
@@ -35,37 +33,22 @@ export const POST = async (req) => {
       email: newUser.email,
       wallet_balance: newUser.wallet_balance,
       withdrawal_requests: [],
-      withdrawal_history: [], 
+      withdrawal_history: [],
       ads_count: {
         userid: newUser.userid,
         update_interstitial_ads: 0,
         update_native_ads: 0,
-        update_wallet_balance: 100,
+        update_wallet_balance: 0,
       },
     });
 
     await userDetails.save();
     const updateGameDetail = new Games({
       email: newUser.email,
-      spin_wheel: {
-        spin_count: 5,
-        spin_bonus:1000
-      },
-
-      lucky_slot: {
-        lucky_count: 5, 
-        slot_bonus: 1000
-      },
-
-      scratch_card: {
-        card_count: 5,
-        card_bonus:1000
-      },
-
-      flip_card: {
-        flip_count: 5,
-        flip_bonus:1000
-      }
+      spin_wheel_count: 5,
+      lucky_slot_count: 5,
+      scratch_card_count: 5,
+      flip_card_count: 5,
     });
     await updateGameDetail.save();
     return NextResponse.json({ success: "success" });

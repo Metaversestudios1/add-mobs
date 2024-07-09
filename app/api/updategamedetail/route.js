@@ -13,8 +13,8 @@ export const PUT = async (req) => {
     slotBonus,
     flipCount,
     flipBonus,
+    maxWithdraw,
   } = await req.json();
-  console.log(wheelBonus, wheelCount)
   try {
     if (scratchBonus && scratchCount) {
       await GlobalGameStats.updateOne(
@@ -22,10 +22,10 @@ export const PUT = async (req) => {
         {
           $set: {
             scratch_card: {
-              card_count: parseInt(scratchCount),
-              card_bonus: parseInt(scratchBonus),
+              count: parseInt(scratchCount),
+              bonus: parseInt(scratchBonus),
             },
-          },
+          }, 
         }
       );
       return NextResponse.json({ success: true });
@@ -35,8 +35,8 @@ export const PUT = async (req) => {
         {
           $set: {
             spin_wheel: {
-              spin_count: parseInt(wheelCount),
-              spin_bonus: parseInt(wheelBonus),
+              count: parseInt(wheelCount),
+              bonus: parseInt(wheelBonus),
             },
           },
         }
@@ -48,8 +48,8 @@ export const PUT = async (req) => {
         {
           $set: {
             lucky_slot: {
-              lucky_count: parseInt(slotCount),
-              slot_bonus: parseInt(slotBonus),
+              count: parseInt(slotCount),
+              bonus: parseInt(slotBonus),
             },
           },
         }
@@ -61,14 +61,26 @@ export const PUT = async (req) => {
         {
           $set: {
             flip_card: {
-              flip_count: parseInt(flipCount),
-              flip_bonus: parseInt(flipBonus),
+              count: parseInt(flipCount),
+              bonus: parseInt(flipBonus),
             },
           },
         }
       );
       return NextResponse.json({ success: true });
+    } else if (maxWithdraw) {
+      const max_withdraw = parseInt(maxWithdraw)
+      await GlobalGameStats.updateOne(
+        {},
+        {
+          $set: {
+            max_withdraw_amt:max_withdraw,
+          },
+        }
+      );
+      return NextResponse.json({ success: true });
     }
+    return NextResponse({success :false, message: "You didnot request anything"})
   } catch (err) {
     return NextResponse.json({ success: false, err: err });
   }

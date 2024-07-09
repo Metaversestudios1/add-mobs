@@ -7,7 +7,6 @@ export const POST = async(req)=>{
     try {
     const {email} = await req.json()
     const userDetail = await UserDetails.findOne({email:email})
-    console.log(userDetail)
     return NextResponse.json({success: true, data: userDetail})
     }catch(err) {
         return NextResponse.json({success: false, err: err})

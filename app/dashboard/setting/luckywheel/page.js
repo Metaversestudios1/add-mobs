@@ -12,8 +12,8 @@ useEffect(()=>{
 const fetchOldDetail = async ()=>{
   const res = await fetch ("/api/getglobalstats")
   const response = await res.json()
-  setWheelCount(response.data[0].spin_wheel.spin_count)
-  setWheelBonus(response.data[0].spin_wheel.spin_bonus)
+  setWheelCount(response?.data[0]?.spin_wheel?.count)
+  setWheelBonus(response?.data[0]?.spin_wheel?.bonus)
 }
   const handleSubmit = async(e) =>{
         e.preventDefault()

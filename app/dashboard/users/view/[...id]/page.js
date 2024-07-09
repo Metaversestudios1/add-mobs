@@ -99,19 +99,19 @@ const Page = ({ params }) => {
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Spin count:</div>
                     <div className="mx-5">
-                      {gameDetail?.spin_wheel?.spin_count}
+                      {gameDetail?.spin_wheel_count}
                     </div>
                   </div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Slot count:</div>
                     <div className="mx-5">
-                      {gameDetail?.lucky_slot?.lucky_count}
+                      {gameDetail?.lucky_slot_count}
                     </div>
                   </div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Flip count:</div>
                     <div className="mx-5">
-                      {gameDetail?.flip_card?.flip_count}
+                      {gameDetail?.flip_card_count}
                     </div>
                   </div>
                 </div>
@@ -119,7 +119,7 @@ const Page = ({ params }) => {
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Scratch count:</div>
                     <div className="mx-5">
-                      {gameDetail?.scratch_card?.card_count}
+                      {gameDetail?.scratch_card_count}
                     </div>
                   </div>
                 </div>
@@ -155,7 +155,15 @@ const Page = ({ params }) => {
                 Withdraw Requests
               </button>
             </Link>
-            <Link href={`/dashboard/users/view/adscount`}>
+            <Link
+                          href={{
+                            pathname: `/dashboard/users/view/adscount/[id]`,
+                            query: {
+                              id: param,
+                            },
+                          }}
+                          as={`/dashboard/users/view/adscount/${param}`}
+                        >
               <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
                 Ads Count
               </button>

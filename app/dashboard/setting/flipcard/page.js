@@ -12,8 +12,9 @@ const Page = () => {
   const fetchOldDetail = async ()=>{
     const res = await fetch ("/api/getglobalstats")
     const response = await res.json()
-    setFlipCount(response.data[0].flip_card.flip_count)
-    setFlipBonus(response.data[0].flip_card.flip_bonus)
+    console.log(response)
+    setFlipCount(response?.data[0]?.flip_card?.count)
+    setFlipBonus(response?.data[0]?.flip_card?.bonus)
   
   }
   const handleSubmit = async (e) => {

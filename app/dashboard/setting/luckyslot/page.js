@@ -12,11 +12,10 @@ const Page = () => {
     const fetchOldDetail = async ()=>{
       const res = await fetch ("/api/getglobalstats")
       const response = await res.json()
-      setSlotCount(response.data[0].lucky_slot.lucky_count)
-      setSlotBonus(response.data[0].lucky_slot.slot_bonus)
+      setSlotCount(response?.data[0]?.lucky_slot?.count)
+      setSlotBonus(response?.data[0]?.lucky_slot?.bonus)
     
     }
-
   const handleSubmit = async(e) =>{
         e.preventDefault()
         const data = {slotCount, slotBonus}
