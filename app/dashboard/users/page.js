@@ -106,7 +106,7 @@ const Page = () => {
   const startIndex = (currentPage - 1) * usersPerPage;
   if(!users[0]) {
     return (
-      <div className={`${style.contentContainer} ml-2 mt-2 p-4 min-h-96`}>
+      <div className={`${style.contentContainer} ml-2 mt-2 p-4 min-h-96 `}>
       <div className="p-6 text-xl">Users</div>
           <div>
             <div className={style.searchContainer}>
@@ -169,7 +169,7 @@ const Page = () => {
         </div>
         
       ) : (
-        <div className={`${style.contentContainer} ml-2 mt-2`}>
+        <div className={`${style.contentContainer} ml-2 mt-2  overflow-hidden`}>
           <div className="p-6 text-xl">Users</div>
           <div>
             <div className={style.searchContainer}>
