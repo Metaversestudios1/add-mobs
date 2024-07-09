@@ -98,7 +98,7 @@ const Page = ({ params }) => {
               </th>
               <td class="px-6 py-4">{adsCount?.update_interstitial_ads}</td>
               <td class="px-6 py-4">{adsCount?.update_native_ads}</td>
-              <td class="px-6 py-4">{walletBalance}</td>
+              <td class="px-6 py-4">{(walletBalance).toFixed(2)}</td>
             </tr>
           </tbody>
         </table>
