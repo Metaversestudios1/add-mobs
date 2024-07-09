@@ -94,7 +94,7 @@ const Page = ({ params }) => {
                   </div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Wallet balance:</div>
-                    <div className="mx-5">{(userDetail?.wallet_balance).toFixed(2)}</div>
+                    <div className="mx-5">{(userDetail?.wallet_balance) && (userDetail?.wallet_balance).toFixed(2)}</div>
                   </div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Spin count:</div>

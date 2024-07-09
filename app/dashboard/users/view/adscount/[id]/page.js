@@ -7,7 +7,7 @@ import style from "@/app/dashboard/dashboard.module.css";
 const Page = ({ params }) => {
   const [adsCount, setAdsCount] = useState("");
   const [name, setName] = useState("");
-  const [walletBalance, setWalletBalance] = useState("");
+  const [walletBalance, setWalletBalance] = useState(0);
   const [email, setEmail] = useState("");
   const param = params.id;
   const router = useRouter();
@@ -51,9 +51,8 @@ const Page = ({ params }) => {
       body: JSON.stringify({ email }),
     });
     const response = await res.json();
-    console.log(response?.data?.ads_count)
     setAdsCount(response?.data?.ads_count);
-  };
+  };console.log(typeof(walletBalance))
   return (
     <div className={` ${style.contentContainer}`}>
       <IoIosArrowRoundBack
@@ -61,44 +60,44 @@ const Page = ({ params }) => {
         onClick={goBack}
       />
       <h2 className="ml-10 text-2xl my-5">Ads Count</h2>
-      <div class="relative overflow-x-auto m-10 mt-0 rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <div className="relative overflow-x-auto m-10 mt-0 rounded-lg">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 sr no.
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 user name
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Interestitial ads
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 native ads
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 wallet ballance
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
                 {adsCount?.update_interstitial_ads}
               </th>
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
                 {name}
               </th>
-              <td class="px-6 py-4">{adsCount?.update_interstitial_ads}</td>
-              <td class="px-6 py-4">{adsCount?.update_native_ads}</td>
-              <td class="px-6 py-4">{(walletBalance).toFixed(2)}</td>
+              <td className="px-6 py-4">{adsCount?.update_interstitial_ads}</td>
+              <td className="px-6 py-4">{adsCount?.update_native_ads}</td>
+              <td className="px-6 py-4">{walletBalance && (walletBalance).toFixed(2)}</td>
             </tr>
           </tbody>
         </table>
