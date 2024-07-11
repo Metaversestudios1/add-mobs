@@ -8,7 +8,6 @@ const UserDetailsSchema = new mongoose.Schema(
     // Withdrawal request details
     withdrawal_requests: [
       {
-        user_id: { type: String },
         bank_name: { type: String },
         ac_holder_name: { type: String },
         ac_number: { type: String },

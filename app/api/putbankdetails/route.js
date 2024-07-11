@@ -9,8 +9,6 @@ export const POST = async (req) => {
     const { email, ac_holder_name, ac_number, ifsc_code, ac_type, bank_name } = body;
     const bankDetails = { ac_holder_name, ac_number, ifsc_code, ac_type, bank_name };
 
-    console.log('Request Body:', body);
-    console.log('Bank Details:', bankDetails);
 
     if (!email || !ac_holder_name || !ac_number || !ifsc_code || !bank_name) {
       return NextResponse.json({ error: "Email and all bank details are required" }, { status: 400 });

@@ -19,8 +19,6 @@ export default function DashboardLayout({ children }) {
           <Footer />
         </div>
       </div>
-      {/*<div className={style.footer}>
-      </div>*/}
     </div>
   );
 }

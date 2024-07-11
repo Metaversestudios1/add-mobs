@@ -1,5 +1,5 @@
 import connectDb from "@/connection/mongoose";
-import WithdrawRequest from "@/models/WithdrawRequest";
+import UserDetails from "@/models/UserDetails";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
@@ -14,22 +14,28 @@ export const POST = async (req) => {
       withdraw_amt,
       upi_id,
     } = await req.json();
-    const userWithdraw = new WithdrawRequest({
-      email,
-      withdrawal_requests: [
-      {
-        bank_name,
-        ac_holder_name,
-        ac_number,
-        ifsc_code,
-        withdraw_amt,
-        upi_id,
-      },
-    ]
+    const user = await UserDetails.findOne({ email });
+
+    if (!user) {
+      return NextResponse.json({ message: "User not found" });
+    }
+
+    user.withdrawal_requests.push({
+      bank_name,
+      ac_holder_name,
+      ac_number,
+      ifsc_code,
+      withdraw_amt,
+      upi_id,
     });
-    await userWithdraw.save();
+    user.withdrawal_history.push({
+      withdraw_amt,
+    });
+
+    await user.save();
     return NextResponse.json({ success: true });
   } catch (err) {
+    console.error("Server error:", err);
     return NextResponse.json({ success: false, err: err });
   }
 };
