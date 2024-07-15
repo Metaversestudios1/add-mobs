@@ -65,7 +65,6 @@ const Page = () => {
   const [adsSetting, setAdsSetting] = useState(initialState);
   const [label, setLabel] = useState("");
   const [fields, setFields] = useState([]);
-  const [oldData, setOldData] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -130,14 +129,14 @@ theme: "dark",
   };
 
   useEffect(() => {
+    const fetchOldData = async () => {
+      const res = await fetch("/api/getadssetting");
+      const response = await res.json();
+      setAdsSetting(response.data[0]);
+    };
     fetchOldData();
   }, []);
 
-  const fetchOldData = async () => {
-    const res = await fetch("/api/getadssetting");
-    const response = await res.json();
-    setAdsSetting(response.data[0]);
-  };
 
   return (
     <div className={`${style.contentContainer}`}>

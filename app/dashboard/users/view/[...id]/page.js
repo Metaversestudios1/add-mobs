@@ -17,8 +17,30 @@ const Page = ({ params }) => {
     };
     getData();
   }, []);
-
+  
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/userdetail", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        const response = await res.json();
+        setUserDetail(response.data);
+      } catch (err) {
+        console.log("something wrong", err);
+      }
+    };
+    const fetchGameDetail = async () => {
+      try {
+        const res = await fetch(`/api/getgamedetail/${email}`);
+        const response = await res.json();
+        setGameDetail(response.data);
+      } catch (err) {
+        console.log("something happen" + err);
+      }
+    };
     if (email) {
       fetchData();
       fetchGameDetail();
@@ -39,28 +61,6 @@ const Page = ({ params }) => {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      const res = await fetch("/api/userdetail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const response = await res.json();
-      setUserDetail(response.data);
-    } catch (err) {
-      console.log("something wrong", err);
-    }
-  };
-  const fetchGameDetail = async () => {
-    try {
-      const res = await fetch(`/api/getgamedetail/${email}`);
-      const response = await res.json();
-      setGameDetail(response.data);
-    } catch (err) {
-      console.log("something happen" + err);
-    }
-  };
   return (
     <>
       {gameDetail ? (

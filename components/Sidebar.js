@@ -32,7 +32,6 @@ const Sidebar = () => {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-  console.log(sidebarOpen);
   return (
     <div className="bg-gray-900 ">
     <button

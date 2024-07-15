@@ -19,33 +19,33 @@ const Page = () => {
   const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
+    
+      const fetchUserData = async () => {
+        try {
+          const res = await fetch(
+            `/api/alluserdata?page=${currentPage}&limit=${usersPerPage}`
+          );
+          if (!res.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await res.json();
+          setTotalUsers(data.count);
+          if (data && data.data) {
+            setUsers(data.data);
+            setAllUsers(data.data);
+            setBlock(data.data[0].is_blocked);
+          } else if(!data.success) {
+            setUsers([false])
+          }
+          else{
+          console.error("Empty or malformed data received:", data);
+          }
+        } catch (error) {
+          console.error("Fetch error:", error);
+        }
+      };
     fetchUserData();
   }, [currentPage, usersPerPage]);
-
-  const fetchUserData = async () => {
-    try {
-      const res = await fetch(
-        `/api/alluserdata?page=${currentPage}&limit=${usersPerPage}`
-      );
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await res.json();
-      setTotalUsers(data.count);
-      if (data && data.data) {
-        setUsers(data.data);
-        setAllUsers(data.data);
-        setBlock(data.data[0].is_blocked);
-      } else if(!data.success) {
-        setUsers([false])
-      }
-      else{
-      console.error("Empty or malformed data received:", data);
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
 
   const handleChange = (e) => {
     if (e.target.name === "search") {

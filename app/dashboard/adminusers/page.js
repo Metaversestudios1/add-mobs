@@ -16,22 +16,22 @@ const Page = () => {
   const [totalAdminUsers, setTotalAdminUsers] = useState(0);
 
   useEffect(() => {
+    
+      const fetchUserData = async () => {
+        const res = await fetch(`/api/getadminusers?page=${currentPage}&limit=${usersPerPage}`);
+        const data = await res.json();
+        if(data.success) {
+    
+          setTotalAdminUsers(data.count);
+          setAdminUsers(data.data);
+          setAllUsers(data.data);
+        }
+        else {
+          setAdminUsers([false])
+        }
+      };
     fetchUserData();
   },[currentPage, usersPerPage]); // Only fetch users once on component mount
-
-  const fetchUserData = async () => {
-    const res = await fetch(`/api/getadminusers?page=${currentPage}&limit=${usersPerPage}`);
-    const data = await res.json();
-    if(data.success) {
-
-      setTotalAdminUsers(data.count);
-      setAdminUsers(data.data);
-      setAllUsers(data.data);
-    }
-    else {
-      setAdminUsers([false])
-    }
-  };
 
   const handleChange = (e) => {
     if (e.target.name === "search") {

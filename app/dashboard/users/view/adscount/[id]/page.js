@@ -22,6 +22,15 @@ const Page = ({ params }) => {
   }, []);
 
   useEffect(() => {
+    const fetchAdsData = async () => {
+      const res = await fetch("/api/userdetail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const response = await res.json();
+      setAdsCount(response?.data?.ads_count);
+    };
     if (email) {
       fetchAdsData();
     }
@@ -44,15 +53,6 @@ const Page = ({ params }) => {
     }
   };
 
-  const fetchAdsData = async () => {
-    const res = await fetch("/api/userdetail", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-    const response = await res.json();
-    setAdsCount(response?.data?.ads_count);
-  };console.log(typeof(walletBalance))
   return (
     <div className={` ${style.contentContainer}`}>
       <IoIosArrowRoundBack

@@ -21,6 +21,14 @@ const Page = ({ params }) => {
   }, []);
 
   useEffect(() => {
+    const fetchAccDetails = async () => {
+      const response = await fetch(`/api/getbankdetails/${email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const detail = await response.json();
+      setBank(detail.details);
+    };
     if (email) {
       fetchAccDetails();
     }
@@ -38,14 +46,6 @@ const Page = ({ params }) => {
     } catch (err) {
       console.log("something wrong", err);
     }
-  };
-  const fetchAccDetails = async () => {
-    const response = await fetch(`/api/getbankdetails/${email}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-    const detail = await response.json();
-    setBank(detail.details);
   };
   return (
     <div className={`${style.contentContainer}`}>
