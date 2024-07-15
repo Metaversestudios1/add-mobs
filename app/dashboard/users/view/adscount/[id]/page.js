@@ -15,6 +15,23 @@ const Page = ({ params }) => {
     router.back();
   };
   useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const res = await fetch("/api/getolduserdata", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ param }),
+        });
+        const response = await res.json();
+        setEmail(response.data[0].email);
+        setName(response.data[0].name);
+        setWalletBalance(response.data[0].wallet_balance);
+        
+      } catch (err) {
+        console.log("something wrong", err);
+      }
+    };
+  
     const getData = async () => {
       await fetchEmail();
     };
@@ -36,23 +53,7 @@ const Page = ({ params }) => {
     }
   }, [email]);
 
-  const fetchEmail = async () => {
-    try {
-      const res = await fetch("/api/getolduserdata", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ param }),
-      });
-      const response = await res.json();
-      setEmail(response.data[0].email);
-      setName(response.data[0].name);
-      setWalletBalance(response.data[0].wallet_balance);
-      
-    } catch (err) {
-      console.log("something wrong", err);
-    }
-  };
-
+ 
   return (
     <div className={` ${style.contentContainer}`}>
       <IoIosArrowRoundBack
