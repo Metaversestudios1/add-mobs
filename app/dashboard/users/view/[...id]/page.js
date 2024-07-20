@@ -30,7 +30,7 @@ const Page = ({ params }) => {
     };
     getData();
   }, []);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,14 +60,13 @@ const Page = ({ params }) => {
     }
   }, [email]);
 
-
   return (
     <>
       {gameDetail ? (
-        <div className={` ${style.contentContainer}`} >
-        <Link href="/dashboard/users" className="text-5xl">
-        <IoIosArrowRoundBack />
-      </Link>
+        <div className={` ${style.contentContainer}`}>
+          <Link href="/dashboard/users" className="text-5xl">
+            <IoIosArrowRoundBack />
+          </Link>
           <div className={`${style.detailContainer}`}>
             <div className={`${style.detailImage}`}>
               <div className="rounded-lg bg-white my-4 ml-10 h-60 w-60">
@@ -94,76 +93,87 @@ const Page = ({ params }) => {
                   </div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Wallet balance:</div>
-                    <div className="mx-5">{(userDetail?.wallet_balance) && (userDetail?.wallet_balance).toFixed(2)}</div>
+                    <div className="mx-5">
+                      {userDetail?.wallet_balance &&
+                        (userDetail?.wallet_balance).toFixed(2)}
+                    </div>
                   </div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Spin count:</div>
-                    <div className="mx-5">
-                      {gameDetail?.spin_wheel_count}
-                    </div>
+                    <div className="mx-5">{gameDetail?.spin_wheel_count}</div>
                   </div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Slot count:</div>
-                    <div className="mx-5">
-                      {gameDetail?.lucky_slot_count}
-                    </div>
+                    <div className="mx-5">{gameDetail?.lucky_slot_count}</div>
                   </div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Flip count:</div>
-                    <div className="mx-5">
-                      {gameDetail?.flip_card_count}
-                    </div>
+                    <div className="mx-5">{gameDetail?.flip_card_count}</div>
                   </div>
                 </div>
                 <div>
                   <div className="flex text-2xl mb-5">
                     <div className="mx-5">Scratch count:</div>
-                    <div className="mx-5">
-                      {gameDetail?.scratch_card_count}
-                    </div>
+                    <div className="mx-5">{gameDetail?.scratch_card_count}</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="flex justify-end flex-wrap">
-          <Link
-                          href={{
-                            pathname: `/dashboard/users/view/accountdetails/[id]`,
-                            query: {
-                              id: param,
-                            },
-                          }}
-                          as={`/dashboard/users/view/accountdetails/${param}`}
-                        >
-          <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
-            Account details
-          </button>
-        </Link>
-          <Link href={`/dashboard/users/view/scores`}>
-          <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
-            Scores
-          </button>
-        </Link>
-            <Link href={`/dashboard/users/view/transaction`}>
+            <Link
+              href={{
+                pathname: `/dashboard/users/view/accountdetails/[id]`,
+                query: {
+                  id: param,
+                },
+              }}
+              as={`/dashboard/users/view/accountdetails/${param}`}
+            >
+              <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
+                Account details
+              </button>
+            </Link>
+            <Link href={`/dashboard/users/view/scores`}>
+              <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
+                Scores
+              </button>
+            </Link>
+            <Link
+              href={{
+                pathname: `/dashboard/users/view/transaction/[id]`,
+                query: {
+                  id: param,
+                },
+              }}
+              as={`/dashboard/users/view/transaction/${param}`}
+            >
               <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
                 Transaction History
               </button>
             </Link>
-            <Link href={`/dashboard/users/view/withdrawrequest`}>
+            <Link
+              href={{
+                pathname: `/dashboard/users/view/withdrawrequest/[id]`,
+                query: {
+                  id: param,
+                },
+              }}
+              as={`/dashboard/users/view/withdrawrequest/${param}`}
+            >
               <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
                 Withdraw Requests
               </button>
             </Link>
             <Link
-                          href={{
-                            pathname: `/dashboard/users/view/adscount/[id]`,
-                            query: {
-                              id: param,
-                            },
-                          }}
-                          as={`/dashboard/users/view/adscount/${param}`}
-                        >
+              href={{
+                pathname: `/dashboard/users/view/adscount/[id]`,
+                query: {
+                  id: param,
+                },
+              }}
+              as={`/dashboard/users/view/adscount/${param}`}
+            >
               <button className="rounded-lg  py-2 px-8 m-5 bg-green-900">
                 Ads Count
               </button>

@@ -1,42 +1,34 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import style from "@/app/dashboard/dashboard.module.css";
 
-const Page = () => {
+const Page = ({params}) => {
+  const {id} = params
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [history, setHistory] = useState([])
   const router = useRouter()
   const goBack= ()=>{
     router.back()
   }
-  const [transactions, setTransactions] = useState([
-    {
-      date: "2024-06-22",
-      credit: "--",
-      debit: 500,
-      walletBalance: 300,
-      withdrawAmount: 500
-    },
-    {
-      date: "2024-06-21",
-      credit: "--",
-      debit: 700,
-      walletBalance: 800,
-      withdrawAmount: 700
+  useEffect(()=>{
+    const fetchHistory = async()=>{
+      const res = await fetch("/api/getwithdrawalhistory",{
+        method:"POST",
+        headers:{"Content-type":"application/json"},
+        body: JSON.stringify({id})
+      })
+      const response = await res.json()
+      console.log(response.data)
+      if(response.success){
+        setHistory(response.data)
+      }
     }
-  ]);
+    fetchHistory()
+  },[])
 
-  const filteredTransactions = transactions.filter(transaction => {
-    const transactionDate = new Date(transaction.date);
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    return (
-      (!startDate || transactionDate >= start) &&
-      (!endDate || transactionDate <= end)
-    );
-  });
 
   return (
     <div className={` ${style.contentContainer}`} >
@@ -91,7 +83,7 @@ const Page = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredTransactions.map((transaction, index) => (
+            {history.map((transaction, index) => (
               <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th
                   scope="row"
@@ -103,12 +95,12 @@ const Page = () => {
                   scope="row"
                   className="px-6 py-4 "
                 >
-                  {transaction.date}
+                  {(transaction?.date).split('T')[0]}
                 </th>
-                <td className="px-6 py-4">{transaction.credit}</td>
-                <td className="px-6 py-4">{transaction.debit}</td>
-                <td className="px-6 py-4">{transaction.walletBalance}</td>
-                <td className="px-6 py-4">{transaction.withdrawAmount}</td>
+                <td className="px-6 py-4">{transaction?.credit_amt || "-"}</td>
+                <td className="px-6 py-4">{transaction?.debit_amt || "-"}</td>
+                <td className="px-6 py-4">{transaction?.wallet_balance || "-" }</td>
+                <td className="px-6 py-4">{transaction?.withdraw_amt || "-"}</td>
               </tr>
             ))}
           </tbody>

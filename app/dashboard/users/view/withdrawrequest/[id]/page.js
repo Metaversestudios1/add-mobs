@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import style from "@/app/dashboard/dashboard.module.css";
@@ -7,35 +7,51 @@ import { FcApprove } from "react-icons/fc";
 import { FcDisapprove  } from "react-icons/fc";
 
 
-const Page = () => {
+const Page = ({params}) => {
+  const {id} = params
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [requests, setRequests] = useState([])
   const router = useRouter()
   const goBack= ()=>{
     router.back()
   }
+  useEffect(()=>{
+    const fetchRequests = async()=>{
+      const res = await fetch("/api/getwithdrawrequests",{
+        method:"POST",
+        headers:{"Content-type":"application/json"},
+        body: JSON.stringify({id})
+      })
+      const response = await res.json()
+      if(response.success){
+        setRequests(response.data)
+      }
+    }
+    fetchRequests()
+  },[])
 
-  const [rows, setRows] = useState([
-    {
-      name: "happy",
-      bankName: "Bank of India",
-      bankAccount: "25143145",
-      ifseCode: "BKID013120",
-      amount: 1000,
-      upi: "95632@ybl",
-      date: "2024-06-01"
-    },
-  ]);
+  // const [rows, setRows] = useState([
+  //   {
+  //     name: "happy",
+  //     bankName: "Bank of India",
+  //     bankAccount: "25143145",
+  //     ifseCode: "BKID013120",
+  //     amount: 1000,
+  //     upi: "95632@ybl",
+  //     date: "2024-06-01"
+  //   },
+  // ]);
 
-  const filteredRows = rows.filter(row => {
-    const rowDate = new Date(row.date);
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    return (
-      (!startDate || rowDate >= start) &&
-      (!endDate || rowDate <= end)
-    );
-  });
+  // const filteredRows = rows.filter(row => {
+  //   const rowDate = new Date(row.date);
+  //   const start = new Date(startDate);
+  //   const end = new Date(endDate);
+  //   return (
+  //     (!startDate || rowDate >= start) &&
+  //     (!endDate || rowDate <= end)
+  //   );
+  // });
 
   return (
     <div className={` ${style.contentContainer}`} >
@@ -88,8 +104,8 @@ const Page = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredRows.map((row, index) => (
-              <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            {requests.map((item, index) => (
+              <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -100,10 +116,10 @@ const Page = () => {
                   scope="row"
                   className="px-6 py-4 "
                 >
-                  {row.date}
+                  15-07-2024
                 </th>
-                <td className="px-6 py-4">{row.name}</td>
-                <td className="px-6 py-4">{row.amount}</td>
+                <td className="px-6 py-4">{item?.ac_holder_name ||"-" }</td>
+                <td className="px-6 py-4">{item?.withdraw_amt || "-"}</td>
                 <td className="px-6 py-4 flex"><FcApprove className="text-2xl cursor-pointer" /><FcDisapprove className="text-2xl cursor-pointer"/></td>
               </tr>
             ))}
