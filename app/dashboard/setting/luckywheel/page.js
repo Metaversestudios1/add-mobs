@@ -8,23 +8,23 @@ const Page = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchOldDetail = async () => {
+      try {
+        const res = await fetch("/api/getglobalstats");
+        if (!res.ok) {
+          throw new Error(`Error: ${res.statusText}`);
+        }
+        const response = await res.json();
+        setWheelCount(response?.data[0]?.spin_wheel?.count || "");
+        setWheelBonus(response?.data[0]?.spin_wheel?.bonus || "");
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching data:", error);
+      }
+    };
     fetchOldDetail();
   }, []);
 
-  const fetchOldDetail = async () => {
-    try {
-      const res = await fetch("/api/getglobalstats");
-      if (!res.ok) {
-        throw new Error(`Error: ${res.statusText}`);
-      }
-      const response = await res.json();
-      setWheelCount(response?.data[0]?.spin_wheel?.count || "");
-      setWheelBonus(response?.data[0]?.spin_wheel?.bonus || "");
-    } catch (error) {
-      setError(error.message);
-      console.error("Error fetching data:", error);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
