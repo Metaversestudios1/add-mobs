@@ -31,7 +31,7 @@ const Page = ({ params }) => {
       await fetchEmail();
     };
     getData();
-  }, []);
+  }, [param]);
 
   useEffect(() => {
     const fetchAccDetails = async () => {

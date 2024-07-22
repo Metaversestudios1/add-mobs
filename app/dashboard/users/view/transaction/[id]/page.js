@@ -27,7 +27,7 @@ const Page = ({params}) => {
       }
     }
     fetchHistory()
-  },[])
+  },[id])
 
 
   return (

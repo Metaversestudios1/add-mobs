@@ -29,7 +29,7 @@ const Page = ({params}) => {
       }
     }
     fetchRequests()
-  },[])
+  },[id])
 
   // const [rows, setRows] = useState([
   //   {

@@ -1,20 +1,20 @@
 "use client";
 import Link from "next/link";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import {signIn, useSession} from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Home() {
-  const router = useRouter()
-  const { data: session } = useSession() // useSession()
-  console.log(session); 
-  useEffect(() => {
-    if(session) {
-      router.replace("/dashboard")
-    }
-  }, [session, router]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "loading") return; // Do nothing while loading
+    if (session) router.push("/dashboard"); // Redirect if session exists
+  }, [session, status]);
+
   const handleChange = (e) => {
     if (e.target.name == "email") {
       setEmail(e.target.value);
@@ -25,23 +25,28 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!email || !password) {
-      alert("Must provide all fields")
+    if (!email || !password) {
+      alert("Must provide all fields");
     }
-    try{
-      const res = await signIn("credentials", {email:email, password:password, redirect: false})
-      if(res.error) {
+    try {
+      const res = await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: false,
+      });
+      if (res.error) {
         alert("invalid credentials");
         return;
       }
-      router.replace("/dashboard")
-    }catch(err) {
-      alert("Something went wrong")
+      router.replace("/dashboard");
+    } catch (err) {
+      alert("Something went wrong");
     }
-    
-  }
+  };
 
-    return (
+  return session ? (
+    <p>Loading...</p>
+  ) : (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
@@ -80,7 +85,6 @@ export default function Home() {
               >
                 Password
               </label>
-              
             </div>
             <div className="mt-2">
               <input
