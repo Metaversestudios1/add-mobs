@@ -5,14 +5,14 @@ const Page = () => {
   const [maxWithdraw, setMaxWithdraw] = useState("");
 
   useEffect(()=>{ 
+    const fetchOldDetail = async ()=>{
+      const res = await fetch ("/api/getglobalstats")
+      const response = await res.json()
+      setMaxWithdraw(response.data[0].max_withdraw_amt)
+    
+    }
     fetchOldDetail()
   },[])
-  const fetchOldDetail = async ()=>{
-    const res = await fetch ("/api/getglobalstats")
-    const response = await res.json()
-    setMaxWithdraw(response.data[0].max_withdraw_amt)
-  
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

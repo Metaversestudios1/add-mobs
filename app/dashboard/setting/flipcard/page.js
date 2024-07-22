@@ -7,16 +7,16 @@ const Page = () => {
   const [flipBonus, setFlipBonus] = useState("");
 
   useEffect(()=>{
+    const fetchOldDetail = async ()=>{
+      const res = await fetch ("/api/getglobalstats")
+      const response = await res.json()
+      console.log(response)
+      setFlipCount(response?.data[0]?.flip_card?.count)
+      setFlipBonus(response?.data[0]?.flip_card?.bonus)
+    
+    }
     fetchOldDetail()
   },[])
-  const fetchOldDetail = async ()=>{
-    const res = await fetch ("/api/getglobalstats")
-    const response = await res.json()
-    console.log(response)
-    setFlipCount(response?.data[0]?.flip_card?.count)
-    setFlipBonus(response?.data[0]?.flip_card?.bonus)
-  
-  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { flipCount, flipBonus };

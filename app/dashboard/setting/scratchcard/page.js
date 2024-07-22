@@ -9,15 +9,15 @@ const Page = () => {
 
   
     useEffect(()=>{
+      const fetchOldDetail = async ()=>{
+        const res = await fetch ("/api/getglobalstats")
+        const response = await res.json()
+        setScratchCount(response?.data[0]?.scratch_card?.count)
+        setScratchBonus(response?.data[0]?.scratch_card?.bonus)
+      
+      }
       fetchOldDetail()
     },[])
-    const fetchOldDetail = async ()=>{
-      const res = await fetch ("/api/getglobalstats")
-      const response = await res.json()
-      setScratchCount(response?.data[0]?.scratch_card?.count)
-      setScratchBonus(response?.data[0]?.scratch_card?.bonus)
-    
-    }
 
     const handleSubmit = async(e) =>{
         e.preventDefault()
