@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     if (status === "loading") return; // Do nothing while loading
     if (session) router.push("/dashboard"); // Redirect if session exists
-  }, [session, status]);
+  }, [session, router]);
 
   const handleChange = (e) => {
     if (e.target.name == "email") {
