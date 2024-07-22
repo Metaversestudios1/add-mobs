@@ -1,12 +1,18 @@
 "use client";
 import Link from "next/link";
 import {  useRouter } from "next/navigation";
-import { useState } from "react";
-import {signIn} from "next-auth/react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+import {signIn, useSession} from "next-auth/react";
 
 export default function Home() {
   const router = useRouter()
+  const { data: session } = useSession() // useSession()
+  console.log(session); 
+  useEffect(() => {
+    if(session) {
+      router.replace("/dashboard")
+    }
+  }, [session, router]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleChange = (e) => {
@@ -74,14 +80,7 @@ export default function Home() {
               >
                 Password
               </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
+              
             </div>
             <div className="mt-2">
               <input

@@ -26,10 +26,7 @@ const Page = () => {
 
         })
         const response = await res.json()
-        if(response.success) {
-            setSlotBonus("")
-            setSlotCount("")
-        }
+        
 
     }
 

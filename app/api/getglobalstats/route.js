@@ -8,7 +8,7 @@ export const GET = async()=>{
         const userdata = await GlobalGameStats.find();
         return NextResponse.json({success: true, data: userdata})
     }
-    catch(err){
+    catch(err){ 
         return NextResponse.json({"err": err})
     }
 }

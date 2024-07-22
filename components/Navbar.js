@@ -1,7 +1,7 @@
-"use client";
+"use client"
 import React from "react";
 import style from "../style/navbar.module.css";
-import { signOut} from "next-auth/react";
+import {signOut, auth} from "next-auth/react";
 import { IoMdNotifications } from "react-icons/io";
 import Link from "next/link";
 const Navbar = () => {
